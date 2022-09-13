@@ -1,3 +1,4 @@
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 import type { NextPage } from "next";
 import Head from "next/head";
 
@@ -12,7 +13,9 @@ const Home: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className=" text-red-400">Hello World</main>
+      <main className="text-red-400 ">
+        <ConnectButton />
+      </main>
     </>
   );
 };
