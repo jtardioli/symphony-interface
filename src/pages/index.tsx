@@ -12,7 +12,7 @@ const Home: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>Hello World</main>
+      <main className=" text-red-400">Hello World</main>
     </>
   );
 };
