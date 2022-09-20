@@ -5,7 +5,7 @@ import { FaGuitar } from "react-icons/fa";
 import { MdOutlineAlbum } from "react-icons/md";
 import { BiPhotoAlbum } from "react-icons/bi";
 
-const Home: NextPage = () => {
+const Landing: NextPage = () => {
   return (
     <>
       <Head>
@@ -25,11 +25,9 @@ const Home: NextPage = () => {
             <div className="flex  flex-col items-start m-[1rem] self-center -mt-[3rem]  tracking-[1px]	">
               <h1 className="mb-[3rem] text-5xl ">Feel The Groove</h1>
               <p className="mb-[3rem] text-2xl ">
-                Create, curate, and collect. Music for the world{" "}
+                Create. Curate. Collect. Music for the world{" "}
               </p>
-              <button
-                className={`h-[50px] w-[250px] bg-primary  text-2xl  rounded-[15px]`}
-              >
+              <button className="h-[50px] w-[250px] bg-primary  text-2xl  rounded-[15px]">
                 Join Now
               </button>
             </div>
@@ -100,4 +98,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default Landing;
