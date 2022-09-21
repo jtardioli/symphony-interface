@@ -30,7 +30,7 @@ const Landing: NextPage = () => {
                 Create. Curate. Collect. Music for the world{" "}
               </p>
               <button className="h-[50px] w-[250px] bg-primary  text-2xl  rounded-[15px]">
-                Join Now
+                Launch App
               </button>
             </div>
           </section>
