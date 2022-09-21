@@ -60,7 +60,7 @@ const Landing: NextPage = () => {
               </p>
             </div>
             <div>
-              <div className="relative h-[33vw] w-[33vw] ml-[2rem] max-w-[550px]  max-h-[550px]">
+              <div className="relative h-[33vw] w-[33vw] ml-[2rem] max-w-[550px] max-h-[550px] lg:flex hidden">
                 <Image
                   src="/images/albums.png"
                   alt="Picture of Albums"
