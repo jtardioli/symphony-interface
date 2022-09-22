@@ -7,8 +7,11 @@ module.exports = {
       darkPrimary: "#28213D",
       bg: "#121212",
       bgColor: "#1C1B25",
+      black: "#000000",
       white: "white",
       red: "red",
+      transparent: "transparent",
+      darkWhite: "#d9d9d9",
     },
   },
 

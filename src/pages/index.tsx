@@ -4,6 +4,7 @@ import Image from "next/image";
 import { FaGuitar } from "react-icons/fa";
 import { MdOutlineAlbum } from "react-icons/md";
 import { BiPhotoAlbum } from "react-icons/bi";
+import Link from "next/link";
 
 const Landing: NextPage = () => {
   return (
@@ -29,9 +30,11 @@ const Landing: NextPage = () => {
               <p className="mb-[3rem] lg:text-left text-center text-2xl ">
                 Create. Curate. Collect. Music for the world{" "}
               </p>
-              <button className="h-[50px] w-[250px] bg-primary  text-2xl  rounded-[15px]">
-                Launch App
-              </button>
+              <Link href="/home">
+                <button className="h-[50px] w-[250px] bg-primary  text-2xl  rounded-[15px]">
+                  Launch App
+                </button>
+              </Link>
             </div>
           </section>
           <section className="flex items-center justify-between h-screen ">
