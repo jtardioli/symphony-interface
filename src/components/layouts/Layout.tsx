@@ -1,14 +1,22 @@
+import Link from "next/link";
 import { ReactNode } from "react";
+import Nav from "./nav/Nav";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="flex h-screen w-[100%]">
-      <nav className="w-[15vw] bg-black h-screen fixed"></nav>
+      <Nav />
+      {/* Background */}
       <div className="w-[85vw] bg-bg h-screen left-[15vw] fixed -z-20"></div>
+      {/* Gradient */}
       <div className="h-[30vh] bg-gradient-to-t from-bg to-[#292929] top-[7vh] w-full -z-10 fixed"></div>
+      {/* Main Content*/}
       <div className="w-full ml-[15vw]">
-        <header className=" bg-bg h-[7vh] max-h-[70px] sticky z-20   top-0"></header>
-        <div className="p-[1rem]">{children}</div>
+        <header className=" bg-bg h-[7vh] max-h-[70px] sticky z-20 top-0 flex items-center justify-end px-[1rem]">
+          <ConnectButton accountStatus="address" />
+        </header>
+        <div className="p-[2rem]">{children}</div>
       </div>
     </div>
   );
