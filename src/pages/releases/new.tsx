@@ -10,7 +10,7 @@ const NewRelease: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Symphony - Discover</title>
+        <title>Symphony - Create Release</title>
         <meta
           name="Symphony"
           content="interface for musicians to mint and manage their albums"
