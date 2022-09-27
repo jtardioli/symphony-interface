@@ -3,8 +3,24 @@ import Head from "next/head";
 import Image from "next/image";
 import Layout from "../../components/layouts/Layout";
 import { LabeledInput, TrackInput } from "../../components/inputs";
+import { ChangeEvent, useState } from "react";
 
 const NewRelease: NextPage = () => {
+  const [release, setRelease] = useState<any>({});
+  const [img, setImg] = useState("");
+
+  const handleImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
+    const reader = new FileReader();
+    const clone = structuredClone(release);
+    const imgFile = e.target.files![0];
+    reader.onload = (e) => {
+      setImg(e.target!.result as string);
+    };
+    reader.readAsDataURL(imgFile);
+    clone.img = imgFile;
+    setRelease(clone);
+  };
+
   return (
     <>
       <Head>
@@ -19,14 +35,28 @@ const NewRelease: NextPage = () => {
         <main className="flex font-extralight">
           <div className="flex-[1] border-r-[1px] border-white pr-[2rem] mr-[2rem]">
             <section className="flex justify-between">
-              <div className="relative h-[18vw] w-[18vw]  max-w-[550px] max-h-[550px] lg:flex hidden bg-red mr-[1rem]">
-                <Image
-                  src="/images/dark.png"
-                  alt="Picture of Albums"
-                  layout="fill"
-                  objectFit="contain"
+              <label htmlFor="image" className="hover:cursor-pointer">
+                <input
+                  type="file"
+                  name="image"
+                  id="image"
+                  accept="image/png, image/jpg"
+                  className="hidden"
+                  onChange={handleImageUpload}
                 />
-              </div>
+                <div className="relative h-[18vw] w-[18vw]  max-w-[550px] max-h-[550px] flex items-center justify-center  bg-black mr-[1rem]">
+                  {!release.img && <p>No image chosen</p>}
+                  {img && (
+                    <Image
+                      src={img}
+                      alt="Picture of Albums"
+                      layout="fill"
+                      objectFit="contain"
+                    />
+                  )}
+                </div>
+              </label>
+
               <div className="flex flex-col justify-between">
                 <LabeledInput
                   label="Release Title"
