@@ -4,22 +4,38 @@ import Image from "next/image";
 import Layout from "../../components/layouts/Layout";
 import { LabeledInput, TrackInput } from "../../components/inputs";
 import { ChangeEvent, useState } from "react";
+import { Release } from "../../ts/releases";
 
 const NewRelease: NextPage = () => {
-  const [release, setRelease] = useState<any>({});
-  const [img, setImg] = useState("");
+  const [release, setRelease] = useState<Release>({} as Release);
+  const [img, setImg] = useState<string>("");
 
   const handleImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();
     const clone = structuredClone(release);
     const imgFile = e.target.files![0];
+
     reader.onload = (e) => {
       setImg(e.target!.result as string);
     };
     reader.readAsDataURL(imgFile);
-    clone.img = imgFile;
+
+    clone.imgFile = imgFile;
     setRelease(clone);
   };
+
+  const handleEditMetaData = (
+    property: string,
+    newValue: string,
+    isNumber: boolean = false
+  ) => {
+    const clone = structuredClone(release);
+    // @ts-ignore
+    clone[property] = !isNumber ? newValue : Number(newValue);
+    setRelease(clone);
+  };
+
+  console.log(release);
 
   return (
     <>
@@ -45,7 +61,7 @@ const NewRelease: NextPage = () => {
                   onChange={handleImageUpload}
                 />
                 <div className="relative h-[18vw] w-[18vw]  max-w-[550px] max-h-[550px] flex items-center justify-center  bg-black mr-[1rem]">
-                  {!release.img && <p>No image chosen</p>}
+                  {!release.imgFile && <p>No image chosen</p>}
                   {img && (
                     <Image
                       src={img}
@@ -61,20 +77,36 @@ const NewRelease: NextPage = () => {
                 <LabeledInput
                   label="Release Title"
                   placeholder="Ex: Dark Side Of The Moon"
+                  handleChange={handleEditMetaData}
+                  property="title"
                 />
                 <LabeledInput
                   label="Artist Name"
                   placeholder="Ex: Pink Floyd"
+                  property="artist"
+                  handleChange={handleEditMetaData}
                 />
-                <LabeledInput label="Release Type" placeholder="Album" />
+                <LabeledInput
+                  label="Release Type"
+                  placeholder="Album"
+                  property="type"
+                  handleChange={handleEditMetaData}
+                />
               </div>
             </section>
             <section className="flex justify-between mt-[1.5rem]">
               <LabeledInput
                 label="Credits"
                 placeholder="Ex: Roger Waters, David Gilmore"
+                property="credits"
+                handleChange={handleEditMetaData}
               />
-              <LabeledInput label="Tags" placeholder="Ex: Rock, Classic Rock" />
+              <LabeledInput
+                label="Tags"
+                placeholder="Ex: Rock, Classic Rock"
+                property="tags"
+                handleChange={handleEditMetaData}
+              />
             </section>
             <section className="mt-[1.5rem]">
               <div className="flex flex-col ">
@@ -87,6 +119,9 @@ const NewRelease: NextPage = () => {
                 <textarea
                   className="w-ful h-[80px] rounded-[15px] border-[1px] border-white outline-none bg-transparent p-[0.5rem] text-[15px]"
                   name="Description"
+                  onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+                    handleEditMetaData("description", e.target.value)
+                  }
                 />
               </div>
             </section>
@@ -95,14 +130,26 @@ const NewRelease: NextPage = () => {
                 w="180px"
                 label="Mint Price (ETH)"
                 placeholder="Ex: 0.25"
+                property="mintPrice"
+                handleChange={handleEditMetaData}
               />
               <LabeledInput
                 w="180px"
                 label="Max Number Of Mints"
                 placeholder="Ex: 10,000"
+                property="maxMints"
+                handleChange={handleEditMetaData}
+                isNumber
               />
               <div className="flex">
-                <LabeledInput w="80px" label="Royalty %" placeholder="Ex: 15" />
+                <LabeledInput
+                  w="80px"
+                  label="Royalty %"
+                  placeholder="Ex: 15"
+                  property="royaltyPercentage"
+                  handleChange={handleEditMetaData}
+                  isNumber
+                />
                 <p className="mt-[1.8rem] ml-1 text-2xl">%</p>
               </div>
             </section>
@@ -110,10 +157,16 @@ const NewRelease: NextPage = () => {
               <LabeledInput
                 label="Mint Start Date"
                 placeholder="12/12/2022 5pm EST"
+                property="mintStart"
+                handleChange={handleEditMetaData}
+                isNumber
               />
               <LabeledInput
                 label="Mint End Date"
                 placeholder="12/12/2022 8pm EST"
+                property="mintEnd"
+                handleChange={handleEditMetaData}
+                isNumber
               />
             </section>
             <section className="flex justify-between mt-[2rem]">

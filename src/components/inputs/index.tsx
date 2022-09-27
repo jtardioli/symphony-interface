@@ -1,12 +1,28 @@
+import { ChangeEvent } from "react";
 import { AiFillDelete, AiFillEye } from "react-icons/ai";
+import { Release } from "../../ts/releases";
 
 interface LabeledInputProps {
   label: string;
   placeholder: string;
   w?: string;
+  handleChange: (
+    property: string,
+    newValue: string,
+    isNumber: boolean | undefined
+  ) => void;
+  property: string;
+  isNumber?: boolean;
 }
 
-export const LabeledInput = ({ label, placeholder, w }: LabeledInputProps) => {
+export const LabeledInput = ({
+  label,
+  placeholder,
+  w,
+  handleChange,
+  property,
+  isNumber,
+}: LabeledInputProps) => {
   const width = w ? w : "270px";
 
   return (
@@ -19,6 +35,9 @@ export const LabeledInput = ({ label, placeholder, w }: LabeledInputProps) => {
         name={label}
         placeholder={placeholder}
         style={{ width: width }}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => {
+          handleChange(property, e.target.value, isNumber);
+        }}
       />
     </div>
   );

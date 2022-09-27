@@ -2,15 +2,15 @@ export interface Release {
   artist: string;
   credits: string;
   description: string;
-  releaseType: ReleaseType;
-  royaltyPercentage: number;
-  tags: string[];
-  title: string;
-  tracks: Track[];
+  imgFile: File;
   maxMints: number;
+  mintEnd: number;
   mintPrice: number;
-  mintStartDate: number;
-  mintEndDate: number;
+  mintStart: number;
+  royaltyPercentage: number;
+  tags: string;
+  title: string;
+  type: ReleaseType;
 }
 
 export interface Track {
