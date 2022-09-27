@@ -4,7 +4,7 @@ import Image from "next/image";
 import Layout from "../../components/layouts/Layout";
 import { LabeledInput, TrackInput } from "../../components/inputs";
 import { ChangeEvent, useState } from "react";
-import { Release } from "../../ts/releases";
+import { Release, ReleaseType } from "../../ts/releases";
 
 const NewRelease: NextPage = () => {
   const [release, setRelease] = useState<Release>({} as Release);
@@ -34,8 +34,6 @@ const NewRelease: NextPage = () => {
     clone[property] = !isNumber ? newValue : Number(newValue);
     setRelease(clone);
   };
-
-  console.log(release);
 
   return (
     <>
@@ -86,12 +84,25 @@ const NewRelease: NextPage = () => {
                   property="artist"
                   handleChange={handleEditMetaData}
                 />
-                <LabeledInput
-                  label="Release Type"
-                  placeholder="Album"
-                  property="type"
-                  handleChange={handleEditMetaData}
-                />
+                <div className="flex flex-col">
+                  <label
+                    className="text-[13px] mb-[0.3rem]"
+                    htmlFor="Release Type"
+                  >
+                    Release Type
+                  </label>
+                  <select
+                    className="w-[270px] h-[45px] rounded-[15px] border-[1px] border-white outline-none bg-transparent px-[0.5rem] text-[15px]"
+                    name="Release Type"
+                    onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+                      handleEditMetaData("type", e.target.value);
+                    }}
+                  >
+                    <option value={ReleaseType.ALBUM}>Album</option>
+                    <option value={ReleaseType.EP}>Ep</option>
+                    <option value={ReleaseType.SINGLE}>Single</option>
+                  </select>
+                </div>
               </div>
             </section>
             <section className="flex justify-between mt-[1.5rem]">
