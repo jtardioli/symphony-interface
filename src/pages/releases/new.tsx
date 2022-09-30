@@ -6,8 +6,14 @@ import { LabeledInput, TrackInput } from "../../components/inputs";
 import { ChangeEvent, useState } from "react";
 import { Release, ReleaseType } from "../../ts/releases";
 
+const emptyTrack = { title: "", file: null };
+
 const NewRelease: NextPage = () => {
-  const [release, setRelease] = useState<Release>({} as Release);
+  const [release, setRelease] = useState<Release>({
+    imgFile: null,
+    tracks: [emptyTrack],
+  });
+
   const [img, setImg] = useState<string>("");
 
   const handleImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -19,7 +25,7 @@ const NewRelease: NextPage = () => {
       setImg(e.target!.result as string);
     };
     reader.readAsDataURL(imgFile);
-
+    // @ts-ignore
     clone.imgFile = imgFile;
     setRelease(clone);
   };
@@ -34,6 +40,24 @@ const NewRelease: NextPage = () => {
     clone[property] = !isNumber ? newValue : Number(newValue);
     setRelease(clone);
   };
+
+  const handleAddTrack = () => {
+    const clone = structuredClone(release);
+    clone.tracks.push(emptyTrack);
+    setRelease(clone);
+  };
+
+  const renderTracks = release.tracks.map((track, index) => {
+    return (
+      <TrackInput
+        key={index}
+        index={index + 1}
+        title={track.title}
+        file={track.file}
+        setRelease={setRelease}
+      />
+    );
+  });
 
   return (
     <>
@@ -192,16 +216,15 @@ const NewRelease: NextPage = () => {
           <div className="red flex-[0.9]">
             <div className="flex items-center justify-between mb-[2rem]">
               <h1 className="text-2xl">Add Tracks</h1>
-              <button className="w-[30px] h-[30px] text-black rounded-[50%] bg-darkWhite font-normal items-center justify-center flex text-xl">
+              <button
+                onClick={handleAddTrack}
+                className="w-[30px] h-[30px] text-black rounded-[50%] bg-darkWhite font-normal items-center justify-center flex text-xl"
+              >
                 +
               </button>
             </div>
             {/* Songs */}
-            <div>
-              <TrackInput index={1} title="" fileName="blah_blah.mp3" />
-              <TrackInput index={2} title="" fileName="blah_blah.mp3" />
-              <TrackInput index={3} title="" fileName="blah_blah.mp3" />
-            </div>
+            <div>{renderTracks}</div>
           </div>
         </main>
       </Layout>
