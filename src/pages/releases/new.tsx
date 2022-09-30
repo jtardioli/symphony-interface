@@ -2,18 +2,30 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Layout from "../../components/layouts/Layout";
-import { LabeledInput, TrackInput } from "../../components/inputs";
+import { LabeledInput } from "../../components/inputs";
 import { ChangeEvent, useState } from "react";
 import { Release, ReleaseType } from "../../ts/releases";
+import { TrackInput } from "../../components/inputs/TrackInput";
 
 const emptyTrack = { title: "", file: null };
+const emptyRelease: Release = {
+  artist: "",
+  credits: "",
+  description: "",
+  imgFile: null,
+  maxMints: 0,
+  mintEnd: 0,
+  mintPrice: 0,
+  mintStart: 0,
+  royaltyPercentage: 0,
+  tags: "",
+  title: "",
+  tracks: [emptyTrack],
+  type: ReleaseType.ALBUM,
+};
 
 const NewRelease: NextPage = () => {
-  const [release, setRelease] = useState<Release>({
-    imgFile: null,
-    tracks: [emptyTrack],
-  });
-
+  const [release, setRelease] = useState<Release>(emptyRelease);
   const [img, setImg] = useState<string>("");
 
   const handleImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -25,7 +37,6 @@ const NewRelease: NextPage = () => {
       setImg(e.target!.result as string);
     };
     reader.readAsDataURL(imgFile);
-    // @ts-ignore
     clone.imgFile = imgFile;
     setRelease(clone);
   };
