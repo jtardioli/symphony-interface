@@ -7,6 +7,7 @@ import { ChangeEvent, useState } from "react";
 import { Release, ReleaseType } from "../../ts/releases";
 import { TrackInput } from "../../components/inputs/TrackInput";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { DateInput } from "../../components/inputs/DateInput";
 
 const emptyTrack = {
   title: "",
@@ -113,7 +114,7 @@ const NewRelease: NextPage = () => {
       </Draggable>
     );
   });
-
+  console.log(release);
   return (
     <>
       <Head>
@@ -170,17 +171,19 @@ const NewRelease: NextPage = () => {
                   >
                     Release Type
                   </label>
-                  <select
-                    className="w-[270px] h-[45px] rounded-[15px] border-[1px] border-white outline-none bg-transparent px-[0.5rem] text-[15px]"
-                    name="Release Type"
-                    onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                      handleEditMetaData("type", e.target.value);
-                    }}
-                  >
-                    <option value={ReleaseType.ALBUM}>Album</option>
-                    <option value={ReleaseType.EP}>Ep</option>
-                    <option value={ReleaseType.SINGLE}>Single</option>
-                  </select>
+                  <div className="w-[270px] h-[45px] rounded-[15px] border-[1px] border-white  bg-transparent px-[0.5] text-[15px]">
+                    <select
+                      className="w-[260px] h-[45px] rounded-[15px] outline-none  bg-transparent pl-[0.3rem] text-[15px]"
+                      name="Release Type"
+                      onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+                        handleEditMetaData("type", e.target.value);
+                      }}
+                    >
+                      <option value={ReleaseType.ALBUM}>Album</option>
+                      <option value={ReleaseType.EP}>Ep</option>
+                      <option value={ReleaseType.SINGLE}>Single</option>
+                    </select>
+                  </div>
                 </div>
               </div>
             </section>
@@ -244,19 +247,17 @@ const NewRelease: NextPage = () => {
               </div>
             </section>
             <section className="flex justify-between mt-[1.5rem]">
-              <LabeledInput
-                label="Mint Start Date"
-                placeholder="12/12/2022 5pm EST"
+              <DateInput
+                label="Mint Start Date/Time"
                 property="mintStart"
-                handleChange={handleEditMetaData}
-                isNumber
+                setRelease={setRelease}
+                value={release.mintStart}
               />
-              <LabeledInput
-                label="Mint End Date"
-                placeholder="12/12/2022 8pm EST"
+              <DateInput
+                label="Mint End Date/Time"
                 property="mintEnd"
-                handleChange={handleEditMetaData}
-                isNumber
+                setRelease={setRelease}
+                value={release.mintEnd}
               />
             </section>
             <section className="flex justify-between mt-[2rem]">
