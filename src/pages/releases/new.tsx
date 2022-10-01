@@ -8,8 +8,15 @@ import { Release, ReleaseType } from "../../ts/releases";
 import { TrackInput } from "../../components/inputs/TrackInput";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
-const emptyTrack = { title: "", file: null, id: String(Math.random()) };
+const emptyTrack = {
+  title: "",
+  file: null,
+  id: String(Math.random()),
+  position: 1,
+  hidden: false,
+};
 const emptyRelease: Release = {
+  id: "",
   artist: "",
   credits: "",
   description: "",
@@ -57,7 +64,13 @@ const NewRelease: NextPage = () => {
 
   const handleAddTrack = () => {
     const clone = structuredClone(release);
-    clone.tracks.push({ title: "", file: null, id: String(Math.random()) });
+    clone.tracks.push({
+      title: "",
+      file: null,
+      position: clone.tracks.length + 1,
+      id: String(Math.random()),
+      hidden: false,
+    });
     setRelease(clone);
   };
 
@@ -70,6 +83,11 @@ const NewRelease: NextPage = () => {
     const movedItem = clone.tracks.splice(srcIndex, 1)[0]; // splice returns an array of the objects removed
 
     clone.tracks.splice(desIndex!, 0, movedItem);
+
+    // Reorder tracks for db
+    clone.tracks.forEach((track, index) => {
+      track.position = index + 1;
+    });
     setRelease(clone);
   };
 
@@ -84,7 +102,9 @@ const NewRelease: NextPage = () => {
           >
             <TrackInput
               index={index + 1}
+              order={track.position}
               title={track.title}
+              hidden={track.hidden}
               file={track.file}
               setRelease={setRelease}
             />

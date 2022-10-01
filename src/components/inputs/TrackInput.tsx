@@ -1,11 +1,13 @@
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
-import { AiFillDelete, AiFillEye } from "react-icons/ai";
+import { AiFillDelete, AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { Release } from "../../ts/releases";
 
 interface TrackInputProps {
   index: number;
   title: string;
   file: File | null;
+  hidden: boolean;
+  position: number;
   setRelease: Dispatch<SetStateAction<Release>>;
 }
 
@@ -13,6 +15,8 @@ export const TrackInput = ({
   index,
   title,
   file,
+  hidden,
+  position,
   setRelease,
 }: TrackInputProps) => {
   const handleDelete = (index: number) => {
@@ -23,10 +27,18 @@ export const TrackInput = ({
     });
   };
 
-  const handleEditTrackTitle = (index: number, newValue: string) => {
+  const handleEditTrackTitle = (newValue: string) => {
     setRelease((prev: Release) => {
       const clone = structuredClone(prev);
       clone.tracks[index - 1].title = newValue;
+      return clone;
+    });
+  };
+
+  const handleToggleHidden = () => {
+    setRelease((prev: Release) => {
+      const clone = structuredClone(prev);
+      clone.tracks[index - 1].hidden = !clone.tracks[index - 1].hidden;
       return clone;
     });
   };
@@ -43,14 +55,14 @@ export const TrackInput = ({
   return (
     <div className="flex items-center justify-between mb-[1rem] cursor-grab active:cursor-grabbing">
       <div className="flex items-center">
-        <h2 className="text-[32px] min-w-[35px]">{index}.</h2>
+        <h2 className="text-[32px] min-w-[35px]">{position}.</h2>
         <div className="font-normal ">
           <input
             placeholder="Track Title"
             className="h-[30px] rounded-[15px] outline-none bg-transparent  text-base px-[5px] w-[300px]"
             value={title}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
-              handleEditTrackTitle(index, e.target.value);
+              handleEditTrackTitle(e.target.value);
             }}
           />
           <p className="text-[12px] text-grayText px-[5px]">
@@ -73,8 +85,8 @@ export const TrackInput = ({
           </div>
         </label>
 
-        <button className="mr-[0.5rem]">
-          <AiFillEye size={35} />
+        <button onClick={handleToggleHidden} className="mr-[0.5rem]">
+          {hidden ? <AiFillEyeInvisible size={35} /> : <AiFillEye size={35} />}
         </button>
         <button
           onClick={() => {

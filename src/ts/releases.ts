@@ -1,4 +1,5 @@
 export interface Release {
+  id: "";
   artist: string;
   credits: string;
   description: string;
@@ -16,6 +17,8 @@ export interface Release {
 
 export interface Track {
   title: string;
+  hidden: boolean;
+  position: number;
   file: File | null;
   id: string;
 }
