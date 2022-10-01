@@ -102,7 +102,7 @@ const NewRelease: NextPage = () => {
           >
             <TrackInput
               index={index + 1}
-              order={track.position}
+              position={track.position}
               title={track.title}
               hidden={track.hidden}
               file={track.file}
