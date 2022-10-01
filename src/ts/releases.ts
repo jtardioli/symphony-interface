@@ -17,6 +17,7 @@ export interface Release {
 export interface Track {
   title: string;
   file: File | null;
+  id: string;
 }
 
 export enum ReleaseType {

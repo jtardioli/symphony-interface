@@ -6,8 +6,9 @@ import { LabeledInput } from "../../components/inputs";
 import { ChangeEvent, useState } from "react";
 import { Release, ReleaseType } from "../../ts/releases";
 import { TrackInput } from "../../components/inputs/TrackInput";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
-const emptyTrack = { title: "", file: null };
+const emptyTrack = { title: "", file: null, id: String(Math.random()) };
 const emptyRelease: Release = {
   artist: "",
   credits: "",
@@ -33,9 +34,11 @@ const NewRelease: NextPage = () => {
     const clone = structuredClone(release);
     const imgFile = e.target.files![0];
 
+    /* async method which loads image file as url */
     reader.onload = (e) => {
       setImg(e.target!.result as string);
     };
+
     reader.readAsDataURL(imgFile);
     clone.imgFile = imgFile;
     setRelease(clone);
@@ -54,19 +57,40 @@ const NewRelease: NextPage = () => {
 
   const handleAddTrack = () => {
     const clone = structuredClone(release);
-    clone.tracks.push(emptyTrack);
+    clone.tracks.push({ title: "", file: null, id: String(Math.random()) });
+    setRelease(clone);
+  };
+
+  const handleDragEnd = (params: any) => {
+    const clone = structuredClone(release);
+
+    const srcIndex = params.source.index; // the index that was grabbed
+    const desIndex = params.destination?.index; // the index you dragged the item to
+
+    const movedItem = clone.tracks.splice(srcIndex, 1)[0]; // splice returns an array of the objects removed
+
+    clone.tracks.splice(desIndex!, 0, movedItem);
     setRelease(clone);
   };
 
   const renderTracks = release.tracks.map((track, index) => {
     return (
-      <TrackInput
-        key={index}
-        index={index + 1}
-        title={track.title}
-        file={track.file}
-        setRelease={setRelease}
-      />
+      <Draggable key={track.id} draggableId={String(track.id)} index={index}>
+        {(provided, snapshot) => (
+          <div
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+          >
+            <TrackInput
+              index={index + 1}
+              title={track.title}
+              file={track.file}
+              setRelease={setRelease}
+            />
+          </div>
+        )}
+      </Draggable>
     );
   });
 
@@ -234,8 +258,19 @@ const NewRelease: NextPage = () => {
                 +
               </button>
             </div>
-            {/* Songs */}
-            <div>{renderTracks}</div>
+            {/* Tracks */}
+            <div>
+              <DragDropContext onDragEnd={handleDragEnd}>
+                <Droppable droppableId="1">
+                  {(provided, snapshot) => (
+                    <div ref={provided.innerRef} {...provided.droppableProps}>
+                      {renderTracks}
+                      {provided.placeholder}
+                    </div>
+                  )}
+                </Droppable>
+              </DragDropContext>
+            </div>
           </div>
         </main>
       </Layout>

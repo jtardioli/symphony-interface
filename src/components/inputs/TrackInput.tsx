@@ -40,15 +40,13 @@ export const TrackInput = ({
     });
   };
 
-  console.log(file);
-
   return (
-    <div className="flex items-center justify-between mb-[1rem]">
+    <div className="flex items-center justify-between mb-[1rem] cursor-grab active:cursor-grabbing">
       <div className="flex items-center">
         <h2 className="text-[32px] min-w-[35px]">{index}.</h2>
         <div className="font-normal ">
           <input
-            placeholder="Track Name"
+            placeholder="Track Title"
             className="h-[30px] rounded-[15px] outline-none bg-transparent  text-base px-[5px] w-[300px]"
             value={title}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
@@ -56,7 +54,7 @@ export const TrackInput = ({
             }}
           />
           <p className="text-[12px] text-grayText px-[5px]">
-            {file ? file.name : "example.mp3"}
+            {file ? file.name : "example.mp3/example.wav"}
           </p>
         </div>
       </div>
