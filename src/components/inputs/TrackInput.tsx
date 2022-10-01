@@ -64,7 +64,7 @@ export const TrackInput = ({
             type="file"
             name={`track-${index}`}
             id={`track-${index}`}
-            accept="audio/mp3, audio.wav"
+            accept="audio.wav"
             className="hidden"
             onChange={handleTrackUpload}
           />
