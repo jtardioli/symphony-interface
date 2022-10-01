@@ -8,6 +8,8 @@ import { Release, ReleaseType } from "../../ts/releases";
 import { TrackInput } from "../../components/inputs/TrackInput";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { DateInput } from "../../components/inputs/DateInput";
+import { MdDragHandle } from "react-icons/md";
+import { updateTrackPositions } from "../../utils/releases";
 
 const emptyTrack = {
   title: "",
@@ -85,10 +87,7 @@ const NewRelease: NextPage = () => {
 
     clone.tracks.splice(desIndex!, 0, movedItem);
 
-    // Reorder tracks for db
-    clone.tracks.forEach((track, index) => {
-      track.position = index + 1;
-    });
+    updateTrackPositions(clone);
     setRelease(clone);
   };
 
@@ -99,7 +98,8 @@ const NewRelease: NextPage = () => {
           <div
             ref={provided.innerRef}
             {...provided.draggableProps}
-            {...provided.dragHandleProps}
+            {...provided.dragHandleProps} // place this prop where you can grab item
+            className="flex items-center"
           >
             <TrackInput
               index={index + 1}
@@ -127,7 +127,7 @@ const NewRelease: NextPage = () => {
       </Head>
       <Layout>
         <main className="flex font-extralight">
-          <div className="flex-[1] border-r-[1px] border-white pr-[2rem] mr-[2rem]">
+          <div className="flex-[1] border-r-[1px] border-white pr-[2rem] mr-[1rem]">
             <section className="flex justify-between">
               <label htmlFor="image" className="hover:cursor-pointer">
                 <input

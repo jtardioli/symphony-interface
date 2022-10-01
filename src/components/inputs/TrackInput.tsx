@@ -1,6 +1,8 @@
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { AiFillDelete, AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { MdDragHandle } from "react-icons/md";
 import { Release } from "../../ts/releases";
+import { updateTrackPositions } from "../../utils/releases";
 
 interface TrackInputProps {
   index: number;
@@ -23,6 +25,7 @@ export const TrackInput = ({
     setRelease((prev: Release) => {
       const clone = structuredClone(prev);
       clone.tracks.splice(index - 1, 1);
+      updateTrackPositions(clone);
       return clone;
     });
   };
@@ -55,6 +58,9 @@ export const TrackInput = ({
   return (
     <div className="flex items-center justify-between mb-[1rem] cursor-grab active:cursor-grabbing">
       <div className="flex items-center">
+        <div className="mr-[0.8rem]">
+          <MdDragHandle size={20} />
+        </div>
         <h2 className="text-[32px] min-w-[35px]">{position}.</h2>
         <div className="font-normal ">
           <input
