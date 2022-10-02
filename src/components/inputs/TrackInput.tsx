@@ -87,7 +87,6 @@ export const TrackInput = ({
             accept="audio/wav"
             className="hidden"
             onChange={handleTrackUpload}
-            required={index === 0}
           />
           <div className="w-[100px] h-[35px] text-black rounded-[15px] bg-darkWhite font-normal mr-[0.5rem] flex justify-center items-center">
             Upload

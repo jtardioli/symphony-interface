@@ -12,10 +12,13 @@ import { updateTrackPositions } from "../../services/releases";
 
 import { MetaDataKeys, Release, ReleaseType } from "../../ts/releases";
 import { emptyRelease } from "../../utils/releases";
+import { createReleaseURl } from "../../api/server";
+import axios from "axios";
 
 const NewRelease: NextPage = () => {
   const [release, setRelease] = useState<Release>(emptyRelease);
   const [img, setImg] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   /*  
     Uploads Image and stores a URL which can be passed to CSS 
@@ -72,6 +75,17 @@ const NewRelease: NextPage = () => {
     setRelease(clone);
   };
 
+  const handleSaveDraft = async () => {
+    try {
+      await axios.post(createReleaseURl, { release });
+    } catch (error) {
+      console.log(error);
+      setErrorMessage(
+        "Looks like something went wrong. We failed to save your draft"
+      );
+    }
+  };
+
   const renderTracks = release.tracks.map((track, index) => {
     return (
       <Draggable key={track.id} draggableId={String(track.id)} index={index}>
@@ -97,8 +111,6 @@ const NewRelease: NextPage = () => {
     );
   });
 
-  console.log(release);
-
   return (
     <>
       <Head>
@@ -110,7 +122,7 @@ const NewRelease: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <form className="flex font-extralight">
+        <div className="flex font-extralight">
           <div className="flex-[1] border-r-[1px] border-white pr-[2rem] mr-[1rem]">
             <section className="flex justify-between">
               <label htmlFor="image" className="hover:cursor-pointer">
@@ -264,7 +276,10 @@ const NewRelease: NextPage = () => {
               />
             </section>
             <section className="flex justify-between mt-[2rem]">
-              <button className="w-[200px] h-[40px] text-black rounded-[15px] bg-darkWhite font-normal">
+              <button
+                onClick={handleSaveDraft}
+                className="w-[200px] h-[40px] text-black rounded-[15px] bg-darkWhite font-normal"
+              >
                 Save draft
               </button>
               <button className="w-[200px] h-[40px] text-white rounded-[15px] bg-primary font-normal">
@@ -296,7 +311,7 @@ const NewRelease: NextPage = () => {
               </DragDropContext>
             </div>
           </div>
-        </form>
+        </div>
       </Layout>
     </>
   );

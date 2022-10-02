@@ -23,4 +23,5 @@ export const emptyRelease: Release = {
   title: "",
   tracks: [emptyTrack],
   type: ReleaseType.ALBUM,
+  isDraft: true,
 };

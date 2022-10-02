@@ -12,6 +12,7 @@
     "@rainbow-me/rainbowkit": "^0.5.2",
     "@types/react-beautiful-dnd": "^13.1.2",
     "@types/react-flatpickr": "^3.8.7",
+    "axios": "^0.27.2",
     "ethers": "^5.7.0",
     "next": "12.3.0",
     "react": "18.2.0",

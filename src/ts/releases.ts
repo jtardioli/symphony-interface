@@ -13,6 +13,7 @@ export interface Release {
   title: string;
   tracks: Track[];
   type: ReleaseType;
+  isDraft: boolean;
 }
 
 export interface Track {
