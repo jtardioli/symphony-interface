@@ -36,23 +36,23 @@ export const LabeledInput = ({
     let newValue;
     if (isNumber) {
       /*   
-      This allows the input to be cleared
-      otherwise epmpty inputs would be converted to 0
-    */
+        This allows the input to be cleared
+        otherwise epmpty inputs would be converted to 0
+      */
       if (e.target.value === "") {
         newValue = null;
         handleChange(property, newValue);
         return;
       }
       /*   
-      Set Numeric values to type number
-    */
+        Set Numeric values to type number
+      */
       newValue = Number(e.target.value);
       handleChange(property, newValue);
       return;
     }
     /*   
-    Set string values
+      Set string values
     */
     newValue = e.target.value;
     handleChange(property, newValue);
