@@ -1,5 +1,7 @@
 # Symphony Interface
 
+[Live App](https://symphony-interface.vercel.app/)
+
 Designed by musicians for musicians. Symphony allows artists to generate smart contracts for their releases quickly and easily. 
 
 ![image](https://user-images.githubusercontent.com/85530348/193440524-fef54e55-63dd-4b7b-8daf-74835a01dd83.png)
