@@ -1,14 +1,14 @@
 export interface Release {
-  id: "";
+  id: string;
   artist: string;
   credits: string;
   description: string;
   imgFile: File | null;
-  maxMints: number;
-  mintEnd: number;
-  mintPrice: number;
-  mintStart: number;
-  royaltyPercentage: number;
+  maxMints: number | null;
+  mintEnd: number | null;
+  mintPrice: number | null;
+  mintStart: number | null;
+  royaltyPercentage: number | null;
   tags: string;
   title: string;
   tracks: Track[];
@@ -28,3 +28,14 @@ export enum ReleaseType {
   EP = "EP",
   SINGLE = "SINGLE",
 }
+
+export type MetaDataKeys =
+  | "title"
+  | "artist"
+  | "type"
+  | "credits"
+  | "tags"
+  | "description"
+  | "mintPrice"
+  | "maxMints"
+  | "royaltyPercentage";

@@ -1,8 +1,26 @@
-import { Release } from "../ts/releases";
+import { Release, ReleaseType, Track } from "../ts/releases";
 
-export const updateTrackPositions = (release: Release) => {
-  release.tracks.forEach((track, index) => {
-    track.position = index + 1;
-  });
-  return release;
+export const emptyTrack: Track = {
+  title: "",
+  file: null,
+  id: String(Math.random()),
+  position: 1,
+  hidden: false,
+};
+
+export const emptyRelease: Release = {
+  id: "",
+  artist: "",
+  credits: "",
+  description: "",
+  imgFile: null,
+  maxMints: null,
+  mintEnd: null,
+  mintPrice: null,
+  mintStart: null,
+  royaltyPercentage: null,
+  tags: "",
+  title: "",
+  tracks: [emptyTrack],
+  type: ReleaseType.ALBUM,
 };

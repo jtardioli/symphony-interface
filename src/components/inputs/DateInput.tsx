@@ -5,7 +5,7 @@ import { Release } from "../../ts/releases";
 
 interface DateInputProps {
   label: string;
-  value: number;
+  value: number | null;
   property: "mintStart" | "mintEnd";
   setRelease: Dispatch<SetStateAction<Release>>;
 }
@@ -17,7 +17,7 @@ export const DateInput = ({
   property,
 }: DateInputProps) => {
   const handleDateChange = (date: Date) => {
-    const epochDate = date.getTime();
+    const epochDate = date?.getTime() ?? null;
     setRelease((prev: Release) => {
       const clone = structuredClone(prev);
       clone[property] = epochDate;
@@ -32,8 +32,8 @@ export const DateInput = ({
       </label>
 
       <Flatpickr
-        data-enable-time={true}
-        value={value}
+        data-enable-time
+        value={value!}
         onChange={([date]) => {
           handleDateChange(date);
         }}

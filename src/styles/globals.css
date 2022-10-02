@@ -33,3 +33,15 @@ body::-webkit-scrollbar-thumb {
   background-color: white; /* color of the scroll thumb */
   border-radius: 20px; /* roundness of the scroll thumb */
 }
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}

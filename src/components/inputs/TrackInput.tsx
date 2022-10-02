@@ -2,10 +2,11 @@ import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { AiFillDelete, AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { MdDragHandle } from "react-icons/md";
 import { Release } from "../../ts/releases";
-import { updateTrackPositions } from "../../utils/releases";
+import { updateTrackPositions } from "../../services/releases";
 
 interface TrackInputProps {
   index: number;
+  id: string;
   title: string;
   file: File | null;
   hidden: boolean;
@@ -15,16 +16,17 @@ interface TrackInputProps {
 
 export const TrackInput = ({
   index,
+  id,
   title,
   file,
   hidden,
   position,
   setRelease,
 }: TrackInputProps) => {
-  const handleDelete = (index: number) => {
+  const handleDelete = () => {
     setRelease((prev: Release) => {
       const clone = structuredClone(prev);
-      clone.tracks.splice(index - 1, 1);
+      clone.tracks.splice(index, 1);
       updateTrackPositions(clone);
       return clone;
     });
@@ -33,7 +35,7 @@ export const TrackInput = ({
   const handleEditTrackTitle = (newValue: string) => {
     setRelease((prev: Release) => {
       const clone = structuredClone(prev);
-      clone.tracks[index - 1].title = newValue;
+      clone.tracks[index].title = newValue;
       return clone;
     });
   };
@@ -41,7 +43,7 @@ export const TrackInput = ({
   const handleToggleHidden = () => {
     setRelease((prev: Release) => {
       const clone = structuredClone(prev);
-      clone.tracks[index - 1].hidden = !clone.tracks[index - 1].hidden;
+      clone.tracks[index].hidden = !clone.tracks[index].hidden;
       return clone;
     });
   };
@@ -50,7 +52,7 @@ export const TrackInput = ({
     setRelease((prev: Release) => {
       const clone = structuredClone(prev);
       const trackFile = e.target.files![0];
-      clone.tracks[index - 1].file = trackFile;
+      clone.tracks[index].file = trackFile;
       return clone;
     });
   };
@@ -72,19 +74,20 @@ export const TrackInput = ({
             }}
           />
           <p className="text-[12px] text-grayText px-[5px]">
-            {file ? file.name : "example.mp3/example.wav"}
+            {file ? file.name : "example.wav * WAV files only"}
           </p>
         </div>
       </div>
       <div className="flex items-center">
-        <label htmlFor={`track-${index}`} className="hover:cursor-pointer">
+        <label htmlFor={`track-${id}`} className="hover:cursor-pointer">
           <input
             type="file"
-            name={`track-${index}`}
-            id={`track-${index}`}
-            accept="audio.wav"
+            name={`track-${id}`}
+            id={`track-${id}`}
+            accept="audio/wav"
             className="hidden"
             onChange={handleTrackUpload}
+            required={index === 0}
           />
           <div className="w-[100px] h-[35px] text-black rounded-[15px] bg-darkWhite font-normal mr-[0.5rem] flex justify-center items-center">
             Upload
@@ -94,11 +97,7 @@ export const TrackInput = ({
         <button onClick={handleToggleHidden} className="mr-[0.5rem]">
           {hidden ? <AiFillEyeInvisible size={35} /> : <AiFillEye size={35} />}
         </button>
-        <button
-          onClick={() => {
-            handleDelete(index);
-          }}
-        >
+        <button onClick={handleDelete}>
           <AiFillDelete size={35} />
         </button>
       </div>

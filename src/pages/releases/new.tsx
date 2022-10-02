@@ -4,41 +4,23 @@ import Image from "next/image";
 import Layout from "../../components/layouts/Layout";
 import { LabeledInput } from "../../components/inputs";
 import { ChangeEvent, useState } from "react";
-import { Release, ReleaseType } from "../../ts/releases";
 import { TrackInput } from "../../components/inputs/TrackInput";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { DateInput } from "../../components/inputs/DateInput";
-import { MdDragHandle } from "react-icons/md";
-import { updateTrackPositions } from "../../utils/releases";
 
-const emptyTrack = {
-  title: "",
-  file: null,
-  id: String(Math.random()),
-  position: 1,
-  hidden: false,
-};
-const emptyRelease: Release = {
-  id: "",
-  artist: "",
-  credits: "",
-  description: "",
-  imgFile: null,
-  maxMints: 0,
-  mintEnd: 0,
-  mintPrice: 0,
-  mintStart: 0,
-  royaltyPercentage: 0,
-  tags: "",
-  title: "",
-  tracks: [emptyTrack],
-  type: ReleaseType.ALBUM,
-};
+import { updateTrackPositions } from "../../services/releases";
+
+import { MetaDataKeys, Release, ReleaseType } from "../../ts/releases";
+import { emptyRelease } from "../../utils/releases";
 
 const NewRelease: NextPage = () => {
   const [release, setRelease] = useState<Release>(emptyRelease);
   const [img, setImg] = useState<string>("");
 
+  /*  
+    Uploads Image and stores a URL which can be passed to CSS 
+    for display purposes in the img useState
+  */
   const handleImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();
     const clone = structuredClone(release);
@@ -55,13 +37,12 @@ const NewRelease: NextPage = () => {
   };
 
   const handleEditMetaData = (
-    property: string,
-    newValue: string,
-    isNumber: boolean = false
+    property: MetaDataKeys,
+    newValue: string | number | null
   ) => {
     const clone = structuredClone(release);
     // @ts-ignore
-    clone[property] = !isNumber ? newValue : Number(newValue);
+    clone[property] = newValue;
     setRelease(clone);
   };
 
@@ -102,7 +83,8 @@ const NewRelease: NextPage = () => {
             className="flex items-center"
           >
             <TrackInput
-              index={index + 1}
+              index={index}
+              id={track.id}
               position={track.position}
               title={track.title}
               hidden={track.hidden}
@@ -114,7 +96,9 @@ const NewRelease: NextPage = () => {
       </Draggable>
     );
   });
+
   console.log(release);
+
   return (
     <>
       <Head>
@@ -126,7 +110,7 @@ const NewRelease: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <main className="flex font-extralight">
+        <form className="flex font-extralight">
           <div className="flex-[1] border-r-[1px] border-white pr-[2rem] mr-[1rem]">
             <section className="flex justify-between">
               <label htmlFor="image" className="hover:cursor-pointer">
@@ -157,12 +141,16 @@ const NewRelease: NextPage = () => {
                   placeholder="Ex: Dark Side Of The Moon"
                   handleChange={handleEditMetaData}
                   property="title"
+                  value={release.title}
+                  maxLength={120}
                 />
                 <LabeledInput
                   label="Artist Name"
                   placeholder="Ex: Pink Floyd"
                   property="artist"
                   handleChange={handleEditMetaData}
+                  value={release.artist}
+                  maxLength={120}
                 />
                 <div className="flex flex-col">
                   <label
@@ -193,12 +181,16 @@ const NewRelease: NextPage = () => {
                 placeholder="Ex: Roger Waters, David Gilmore"
                 property="credits"
                 handleChange={handleEditMetaData}
+                value={release.credits}
+                maxLength={200}
               />
               <LabeledInput
                 label="Tags"
-                placeholder="Ex: Rock, Classic Rock"
+                placeholder="Ex: Rock, Bossa Nova, Samba"
                 property="tags"
                 handleChange={handleEditMetaData}
+                value={release.tags}
+                maxLength={120}
               />
             </section>
             <section className="mt-[1.5rem]">
@@ -212,6 +204,7 @@ const NewRelease: NextPage = () => {
                 <textarea
                   className="w-ful h-[80px] rounded-[15px] border-[1px] border-white outline-none bg-transparent p-[0.5rem] text-[15px]"
                   name="Description"
+                  maxLength={500}
                   onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
                     handleEditMetaData("description", e.target.value)
                   }
@@ -225,6 +218,10 @@ const NewRelease: NextPage = () => {
                 placeholder="Ex: 0.25"
                 property="mintPrice"
                 handleChange={handleEditMetaData}
+                value={release.mintPrice}
+                type="number"
+                min={0}
+                isNumber
               />
               <LabeledInput
                 w="180px"
@@ -232,6 +229,9 @@ const NewRelease: NextPage = () => {
                 placeholder="Ex: 10,000"
                 property="maxMints"
                 handleChange={handleEditMetaData}
+                value={release.maxMints}
+                type="number"
+                min={0}
                 isNumber
               />
               <div className="flex">
@@ -241,6 +241,9 @@ const NewRelease: NextPage = () => {
                   placeholder="Ex: 15"
                   property="royaltyPercentage"
                   handleChange={handleEditMetaData}
+                  value={release.royaltyPercentage}
+                  type="number"
+                  min={0}
                   isNumber
                 />
                 <p className="mt-[1.8rem] ml-1 text-2xl">%</p>
@@ -262,7 +265,7 @@ const NewRelease: NextPage = () => {
             </section>
             <section className="flex justify-between mt-[2rem]">
               <button className="w-[200px] h-[40px] text-black rounded-[15px] bg-darkWhite font-normal">
-                Save as draft
+                Save draft
               </button>
               <button className="w-[200px] h-[40px] text-white rounded-[15px] bg-primary font-normal">
                 Deploy NFT
@@ -293,7 +296,7 @@ const NewRelease: NextPage = () => {
               </DragDropContext>
             </div>
           </div>
-        </main>
+        </form>
       </Layout>
     </>
   );
