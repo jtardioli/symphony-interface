@@ -57,9 +57,10 @@ const Landing: NextPage = () => {
                 </div>
               </div>
               <p className="text-2xl text-center lg:text-left">
-                Artists can deploy NFT albums in minutes making{" "}
-                <span className="text-primary">Symphony</span> the first stop
-                for music collectors and enthusiasts.
+                <span className="text-primary">Symphony</span> is the best place
+                for creating and buying music NFTs. We bring together every
+                aspect of your favourite platform while providing more freedom
+                to your favorite artists
               </p>
             </div>
             <div>
@@ -84,14 +85,14 @@ const Landing: NextPage = () => {
                 />
               </div>
             </div>
-            <div className="max-w-[500px] ml-[2rem]">
+            <div className="max-w-[530px] ml-[2rem]">
               <h1 className="mb-[3rem] lg:text-5xl text-[35px] lg:text-left text-center ">
                 Musicians can relax
               </h1>
               <p className="text-2xl text-center lg:text-left">
-                Simply upload your tracks to{" "}
-                <span className="text-primary">Symphony</span> and we will
-                generate the smart contract and host your album’s metadata.
+                Our interface is the easiest way to transform your album, song
+                or performance into an NFT. Your project will be published and
+                accessible to the world within minutes. No coding required!
               </p>
             </div>
           </section>
