@@ -1,16 +1,17 @@
-import "../styles/globals.css";
-import type { AppProps } from "next/app";
-
-import "@rainbow-me/rainbowkit/styles.css";
-
+import { ToastContainer } from "react-toastify";
 import {
   darkTheme,
   getDefaultWallets,
   RainbowKitProvider,
 } from "@rainbow-me/rainbowkit";
+import type { AppProps } from "next/app";
 import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { infuraProvider } from "wagmi/providers/infura";
 import { publicProvider } from "wagmi/providers/public";
+
+import "../styles/globals.css";
+import "@rainbow-me/rainbowkit/styles.css";
+import "react-toastify/dist/ReactToastify.css";
 
 const { chains, provider } = configureChains(
   [chain.mainnet],
@@ -40,7 +41,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         })}
         chains={chains}
       >
-        <Component {...pageProps} />
+        <Component {...pageProps} />]
+        <ToastContainer theme="dark" />
       </RainbowKitProvider>
     </WagmiConfig>
   );

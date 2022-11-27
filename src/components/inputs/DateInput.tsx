@@ -1,12 +1,14 @@
-import Flatpickr from "react-flatpickr";
-import "flatpickr/dist/themes/dark.css";
 import { Dispatch, Ref, SetStateAction } from "react";
+import Flatpickr from "react-flatpickr";
+
 import { Release } from "../../ts/releases";
+
+import "flatpickr/dist/themes/dark.css";
 
 interface DateInputProps {
   label: string;
-  value: number | null;
-  property: "mintStart" | "mintEnd";
+  value: string | null;
+  property: "mintEndDateTime" | "mintStartDateTime";
   setRelease: Dispatch<SetStateAction<Release>>;
 }
 
@@ -17,7 +19,7 @@ export const DateInput = ({
   property,
 }: DateInputProps) => {
   const handleDateChange = (date: Date) => {
-    const epochDate = date?.getTime() ?? null;
+    const epochDate = String(date?.getTime()) ?? null;
     setRelease((prev: Release) => {
       const clone = structuredClone(prev);
       clone[property] = epochDate;

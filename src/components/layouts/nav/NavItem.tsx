@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { Url } from "../../../ts/utils";
 import { useRouter } from "next/router";
+
+import { Url } from "../../../ts/utils";
 
 interface Props {
   href: Url;

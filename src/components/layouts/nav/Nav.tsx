@@ -1,4 +1,3 @@
-import Link from "next/link";
 import NavItem from "./NavItem";
 
 const Nav = () => {

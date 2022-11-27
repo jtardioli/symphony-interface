@@ -1,9 +1,9 @@
+import { BiPhotoAlbum } from "react-icons/bi";
+import { FaGuitar } from "react-icons/fa";
+import { MdOutlineAlbum } from "react-icons/md";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import { FaGuitar } from "react-icons/fa";
-import { MdOutlineAlbum } from "react-icons/md";
-import { BiPhotoAlbum } from "react-icons/bi";
 import Link from "next/link";
 
 const Landing: NextPage = () => {

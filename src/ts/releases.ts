@@ -1,26 +1,27 @@
 export interface Release {
   id: string;
-  artist: string;
+  ownerId: string;
+  artistName: string;
   credits: string;
   description: string;
-  imgFile: File | null;
-  maxMints: number | null;
-  mintEnd: number | null;
+  image: File | string | null;
+  maxNumMints: string | null;
+  mintEndDateTime: string | null;
   mintPrice: number | null;
-  mintStart: number | null;
+  mintStartDateTime: string | null;
   royaltyPercentage: number | null;
-  tags: string;
   title: string;
   tracks: Track[];
-  type: ReleaseType;
-  isDraft: boolean;
+  genres: string[];
+  releaseType: ReleaseType;
+  isDeployed: boolean;
 }
 
 export interface Track {
   title: string;
   hidden: boolean;
   position: number;
-  file: File | null;
+  file: File | string | null;
   id: string;
 }
 
@@ -29,14 +30,3 @@ export enum ReleaseType {
   EP = "EP",
   SINGLE = "SINGLE",
 }
-
-export type MetaDataKeys =
-  | "title"
-  | "artist"
-  | "type"
-  | "credits"
-  | "tags"
-  | "description"
-  | "mintPrice"
-  | "maxMints"
-  | "royaltyPercentage";

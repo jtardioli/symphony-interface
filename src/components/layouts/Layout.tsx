@@ -1,7 +1,7 @@
-import Link from "next/link";
 import { ReactNode } from "react";
-import Nav from "./nav/Nav";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+
+import Nav from "./nav/Nav";
 
 const Layout = ({ children }: { children: ReactNode }) => {
   return (

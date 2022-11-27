@@ -1,8 +1,9 @@
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { AiFillDelete, AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { MdDragHandle } from "react-icons/md";
-import { Release } from "../../ts/releases";
+
 import { updateTrackPositions } from "../../services/releases";
+import { Release } from "../../ts/releases";
 
 interface TrackInputProps {
   index: number;
