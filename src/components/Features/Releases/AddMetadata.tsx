@@ -1,6 +1,7 @@
 import React, { ChangeEvent, Dispatch, SetStateAction } from "react";
 
 import { Release, ReleaseType } from "../../../ts/releases";
+import LabeledInput from "../../Inputs/LabeledInput";
 
 import ImageUpload from "./ImageUpload";
 
@@ -18,33 +19,25 @@ const AddMetadata = ({ release, setRelease, onUpdateMetadata }: Props) => {
           <ImageUpload setRelease={setRelease} />
         </label>
         {/* Inputs beside image */}
+
         <div className="flex flex-col justify-between w-full">
-          <div className="flex flex-col w-full">
-            <label className="text-[13px] mb-[0.3rem]" htmlFor="Release Title">
-              Release Title
-            </label>
-            <input
-              placeholder="The Dark Side Of The Moon"
-              className=" w-full h-[45px] rounded-[15px] border-[1px] border-white outline-none bg-transparent px-[0.5rem] text-[15px] appearance-none"
-              value={release.title}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                onUpdateMetadata("title", e.target.value);
-              }}
-            />
-          </div>
-          <div className="flex flex-col w-full">
-            <label className="text-[13px] mb-[0.3rem]" htmlFor="Artist Name">
-              Artist Name
-            </label>
-            <input
-              placeholder="Pink Floyd"
-              className="w-full h-[45px] rounded-[15px] border-[1px] border-white outline-none bg-transparent px-[0.5rem] text-[15px] appearance-none"
-              value={release.artistName}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                onUpdateMetadata("artistName", e.target.value);
-              }}
-            />
-          </div>
+          <LabeledInput
+            value={release.title}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              onUpdateMetadata("title", e.target.value);
+            }}
+            label="Release Title"
+            placeHolder="The Dark Side Of The Moon"
+          />
+          <LabeledInput
+            value={release.artistName}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              onUpdateMetadata("artistName", e.target.value);
+            }}
+            label="Artist Name"
+            placeHolder="Pink Floyd"
+          />
+
           <div className="flex flex-col w-full">
             <label className="text-[13px] mb-[0.3rem]" htmlFor="Release Type">
               Release Type
@@ -73,19 +66,6 @@ const AddMetadata = ({ release, setRelease, onUpdateMetadata }: Props) => {
             value={release.description}
             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
               onUpdateMetadata("description", e.target.value);
-            }}
-          />
-        </div>
-        <div className="flex flex-col w-full">
-          <label className="text-[13px] mb-[0.3rem]" htmlFor="credits">
-            Credits
-          </label>
-          <textarea
-            placeholder="Lesley Duncan. Vocals (Background) ; David Gilmour. Composer, Guitar, VCS 3 Synthesizer..."
-            className="w-full h-[80px] rounded-[15px] border-[1px] border-white outline-none bg-transparent p-[0.5rem] text-[15px] appearance-none"
-            value={release.credits}
-            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
-              onUpdateMetadata("credits", e.target.value);
             }}
           />
         </div>

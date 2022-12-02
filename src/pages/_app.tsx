@@ -42,7 +42,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         chains={chains}
       >
         <Component {...pageProps} />]
-        <ToastContainer theme="dark" />
+        <ToastContainer theme="dark" autoClose={3200} />
       </RainbowKitProvider>
     </WagmiConfig>
   );

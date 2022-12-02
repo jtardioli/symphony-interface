@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 import axios from "axios";
 import type { NextPage } from "next";
 import Head from "next/head";
@@ -14,7 +15,6 @@ import { emptyRelease } from "../../utils/releases";
 
 const NewRelease: NextPage = () => {
   const [release, setRelease] = useState<Release>(emptyRelease);
-  const [inputErr, setInputErr] = useState({ title: "" });
 
   const uploadTrackFiles = async () => {
     const form = new FormData();
@@ -33,15 +33,23 @@ const NewRelease: NextPage = () => {
   };
 
   const onSaveDraft = async () => {
-    const processedRelease = structuredClone(release);
+    try {
+      const processedRelease = structuredClone(release);
 
-    // const fileKeys = await uploadTrackFiles();
+      // const fileKeys = await uploadTrackFiles();
 
-    // processedRelease.image = findKeyByFieldName(fileKeys, "img") as string;
-    // for (const track of processedRelease.tracks) {
-    //   track.file = findKeyByFieldName(fileKeys, `track-${track.id}`) as string;
-    // }
-    await axios.post(createReleaseURl, { release: processedRelease });
+      // processedRelease.image = findKeyByFieldName(fileKeys, "img") as string;
+      // for (const track of processedRelease.tracks) {
+      //   track.file = findKeyByFieldName(fileKeys, `track-${track.id}`) as string;
+      // }
+      await axios.post(createReleaseURl, { release: processedRelease });
+      toast.success("Release saved as draft");
+    } catch (error) {
+      console.log(
+        `releases/new::onSaveDraft() - Failed to save draft: ${error}`
+      );
+      toast.error("Failed to save release");
+    }
   };
 
   const onUpdateMetadata = (
@@ -76,7 +84,7 @@ const NewRelease: NextPage = () => {
               setRelease={setRelease}
               onUpdateMetadata={onUpdateMetadata}
             />
-            <section className="flex justify-between mt-[2rem]">
+            <section className="flex justify-between">
               <SecondaryButton onClick={onSaveDraft} w="200px">
                 Save as draft
               </SecondaryButton>

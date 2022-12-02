@@ -1,7 +1,6 @@
 import React, { ChangeEvent, Dispatch, SetStateAction } from "react";
 
 import { Release } from "../../../ts/releases";
-import { DateInput } from "../../Inputs/DateInput";
 
 interface Props {
   release: Release;
@@ -71,21 +70,6 @@ const AddContractData = ({ release, setRelease, onUpdateMetadata }: Props) => {
           />
         </div>
       </section>
-
-      <div className="flex justify-between">
-        <DateInput
-          label="Mint Start Date/Time"
-          property="mintStartDateTime"
-          setRelease={setRelease}
-          value={release.mintStartDateTime}
-        />
-        <DateInput
-          label="Mint End Date/Time"
-          property="mintEndDateTime"
-          setRelease={setRelease}
-          value={release.mintEndDateTime}
-        />
-      </div>
     </>
   );
 };

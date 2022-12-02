@@ -2,13 +2,10 @@ export interface Release {
   id: string;
   ownerId: string;
   artistName: string;
-  credits: string;
   description: string;
   image: File | string | null;
   maxNumMints: string | null;
-  mintEndDateTime: string | null;
   mintPrice: number | null;
-  mintStartDateTime: string | null;
   royaltyPercentage: number | null;
   title: string;
   tracks: Track[];
