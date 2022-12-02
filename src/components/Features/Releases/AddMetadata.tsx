@@ -13,7 +13,7 @@ interface Props {
 const AddMetadata = ({ release, setRelease, onUpdateMetadata }: Props) => {
   return (
     <>
-      <section className="flex justify-between">
+      <section className="flex justify-between max-h-[250px] ">
         <label htmlFor="image" className="hover:cursor-pointer">
           <ImageUpload setRelease={setRelease} />
         </label>

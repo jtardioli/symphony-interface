@@ -1,4 +1,5 @@
 import React, { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import { BsFillCloudUploadFill } from "react-icons/bs";
 import Image from "next/image";
 
 import { Release } from "../../../ts/releases";
@@ -34,8 +35,17 @@ const ImageUpload = ({
         className="hidden"
         onChange={onImageUpload}
       />
-      <div className="relative h-[18vw] w-[18vw]  max-w-[550px] max-h-[550px] flex items-center justify-center  bg-black mr-[1rem]">
-        {!displayImg && <p>Choose Image </p>}
+      <div
+        className={`relative min-w-[215px] min-h-[215px] h-[18vw] w-[18vw]  max-w-[250px] max-h-[250px] flex items-center justify-center  bg-black mr-[1rem] ${
+          !displayImg ? "border-dashed border-2 border-darkWhite" : ""
+        }`}
+      >
+        {!displayImg && (
+          <div className="flex flex-col items-center">
+            <BsFillCloudUploadFill color="white" size={60} />
+            <p>Upload Album Artwork</p>
+          </div>
+        )}
         {displayImg && (
           <Image
             src={displayImg}
