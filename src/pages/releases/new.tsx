@@ -32,8 +32,6 @@ const NewRelease: NextPage = () => {
     return fileKeys;
   };
 
-  const validations = () => {};
-
   const onSaveDraft = async () => {
     const processedRelease = structuredClone(release);
 
@@ -122,6 +120,87 @@ const NewRelease: NextPage = () => {
                     <option value={ReleaseType.SINGLE}>Single</option>
                   </select>
                 </div>
+              </div>
+            </section>
+            <section>
+              <div className="flex flex-col w-full">
+                <label
+                  className="text-[13px] mb-[0.3rem]"
+                  htmlFor="description"
+                >
+                  Description
+                </label>
+                <textarea
+                  placeholder="Pink Floyd"
+                  className="w-full h-[80px] rounded-[15px] border-[1px] border-white outline-none bg-transparent p-[0.5rem] text-[15px] appearance-none"
+                  value={release.description}
+                  onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
+                    onUpdateMetadata("description", e.target.value);
+                  }}
+                />
+              </div>
+              <div className="flex flex-col w-full">
+                <label className="text-[13px] mb-[0.3rem]" htmlFor="credits">
+                  Credits
+                </label>
+                <textarea
+                  placeholder="Pink Floyd"
+                  className="w-full h-[80px] rounded-[15px] border-[1px] border-white outline-none bg-transparent p-[0.5rem] text-[15px] appearance-none"
+                  value={release.credits}
+                  onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
+                    onUpdateMetadata("credits", e.target.value);
+                  }}
+                />
+              </div>
+            </section>
+            <section className="flex justify-between mt-[1.5rem]">
+              <div className="flex flex-col w-full">
+                <label
+                  className="text-[13px] mb-[0.3rem]"
+                  htmlFor="Artist Name"
+                >
+                  Artist Name
+                </label>
+                <input
+                  placeholder="Pink Floyd"
+                  className="w-full h-[45px] rounded-[15px] border-[1px] border-white outline-none bg-transparent px-[0.5rem] text-[15px] appearance-none"
+                  value={release.artistName}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                    onUpdateMetadata("artistName", e.target.value);
+                  }}
+                />
+              </div>{" "}
+              <div className="flex flex-col w-full">
+                <label
+                  className="text-[13px] mb-[0.3rem]"
+                  htmlFor="Artist Name"
+                >
+                  Artist Name
+                </label>
+                <input
+                  placeholder="Pink Floyd"
+                  className="w-full h-[45px] rounded-[15px] border-[1px] border-white outline-none bg-transparent px-[0.5rem] text-[15px] appearance-none"
+                  value={release.artistName}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                    onUpdateMetadata("artistName", e.target.value);
+                  }}
+                />
+              </div>{" "}
+              <div className="flex flex-col w-full">
+                <label
+                  className="text-[13px] mb-[0.3rem]"
+                  htmlFor="Artist Name"
+                >
+                  Artist Name
+                </label>
+                <input
+                  placeholder="Pink Floyd"
+                  className="w-full h-[45px] rounded-[15px] border-[1px] border-white outline-none bg-transparent px-[0.5rem] text-[15px] appearance-none"
+                  value={release.artistName}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                    onUpdateMetadata("artistName", e.target.value);
+                  }}
+                />
               </div>
             </section>
 
