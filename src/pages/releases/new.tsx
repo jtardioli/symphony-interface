@@ -62,7 +62,7 @@ const NewRelease: NextPage = () => {
       </Head>
       <Layout>
         <div className="flex font-extralight">
-          <div className="flex-[1] border-r-[1px] border-white pr-[2rem] mr-[1rem]">
+          <div className="flex flex-col flex-[1] border-r-[1px] border-white pr-[2rem] mr-[1rem] gap-[1rem]">
             {/* Image and basic info */}
             <section className="flex justify-between">
               <label htmlFor="image" className="hover:cursor-pointer">
