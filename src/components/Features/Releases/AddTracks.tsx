@@ -3,7 +3,7 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 import { updateTrackPositions } from "../../../services/releases";
 import { Release } from "../../../ts/releases";
-import { TrackInput } from "../../Inputs/TrackInput";
+import { TrackInput } from "../../Inputs1/TrackInput";
 
 const AddTracks = ({
   release,

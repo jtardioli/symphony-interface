@@ -1,7 +1,7 @@
 import React, { ChangeEvent, Dispatch, SetStateAction } from "react";
 
 import { Release } from "../../../ts/releases";
-import { DateInput } from "../../Inputs/DateInput";
+import { DateInput } from "../../Inputs1/DateInput";
 
 interface Props {
   release: Release;
