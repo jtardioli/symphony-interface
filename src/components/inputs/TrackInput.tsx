@@ -9,7 +9,7 @@ interface TrackInputProps {
   index: number;
   id: string;
   title: string;
-  file: File | null;
+  file: File | null | string;
   hidden: boolean;
   position: number;
   setRelease: Dispatch<SetStateAction<Release>>;
@@ -75,6 +75,7 @@ export const TrackInput = ({
             }}
           />
           <p className="text-[12px] text-grayText px-[5px]">
+            {/* @ts-ignore */}
             {file ? file.name : "example.wav * WAV files only"}
           </p>
         </div>

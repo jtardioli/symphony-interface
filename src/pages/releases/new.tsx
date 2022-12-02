@@ -1,15 +1,15 @@
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import type { NextPage } from "next";
 import Head from "next/head";
 
 import { createReleaseURl, uploadsURl } from "../../api/server";
 import { PrimaryButton, SecondaryButton } from "../../components/Buttons";
+import AddContractData from "../../components/Features/Releases/AddContractData";
+import AddMetadata from "../../components/Features/Releases/AddMetadata";
 import AddTracks from "../../components/Features/Releases/AddTracks";
-import ImageUpload from "../../components/Features/Releases/ImageUpload";
-import { DateInput } from "../../components/Inputs/DateInput";
 import Layout from "../../components/Layouts/Layout";
-import { Release, ReleaseType } from "../../ts/releases";
+import { Release } from "../../ts/releases";
 import { emptyRelease } from "../../utils/releases";
 
 const NewRelease: NextPage = () => {
@@ -44,7 +44,10 @@ const NewRelease: NextPage = () => {
     await axios.post(createReleaseURl, { release: processedRelease });
   };
 
-  const onUpdateMetadata = (key: keyof Release, value: string) => {
+  const onUpdateMetadata = (
+    key: keyof Release,
+    value: string | number | null
+  ) => {
     setRelease((prev) => {
       return { ...prev, [key]: value };
     });
@@ -62,162 +65,17 @@ const NewRelease: NextPage = () => {
       </Head>
       <Layout>
         <div className="flex font-extralight">
-          <div className="flex flex-col flex-[1] border-r-[1px] border-white pr-[2rem] mr-[1rem] gap-[1rem]">
-            {/* Image and basic info */}
-            <section className="flex justify-between">
-              <label htmlFor="image" className="hover:cursor-pointer">
-                <ImageUpload setRelease={setRelease} />
-              </label>
-              {/* Inputs beside image */}
-              <div className="flex flex-col justify-between w-full">
-                <div className="flex flex-col w-full">
-                  <label
-                    className="text-[13px] mb-[0.3rem]"
-                    htmlFor="Release Title"
-                  >
-                    Release Title
-                  </label>
-                  <input
-                    placeholder="Dark Side Of The Moon"
-                    className=" w-full h-[45px] rounded-[15px] border-[1px] border-white outline-none bg-transparent px-[0.5rem] text-[15px] appearance-none"
-                    value={release.title}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                      onUpdateMetadata("title", e.target.value);
-                    }}
-                  />
-                </div>
-                <div className="flex flex-col w-full">
-                  <label
-                    className="text-[13px] mb-[0.3rem]"
-                    htmlFor="Artist Name"
-                  >
-                    Artist Name
-                  </label>
-                  <input
-                    placeholder="Pink Floyd"
-                    className="w-full h-[45px] rounded-[15px] border-[1px] border-white outline-none bg-transparent px-[0.5rem] text-[15px] appearance-none"
-                    value={release.artistName}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                      onUpdateMetadata("artistName", e.target.value);
-                    }}
-                  />
-                </div>
-                <div className="flex flex-col w-full">
-                  <label
-                    className="text-[13px] mb-[0.3rem]"
-                    htmlFor="Release Type"
-                  >
-                    Release Type
-                  </label>
-                  <select
-                    className="w-full h-[45px] rounded-[15px] border-[1px] border-white outline-none bg-transparent px-[0.5rem] text-[15px] appearance-none"
-                    onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                      onUpdateMetadata("releaseType", e.target.value);
-                    }}
-                  >
-                    <option value={ReleaseType.ALBUM}>Album</option>
-                    <option value={ReleaseType.EP}>EP</option>
-                    <option value={ReleaseType.SINGLE}>Single</option>
-                  </select>
-                </div>
-              </div>
-            </section>
-            <section>
-              <div className="flex flex-col w-full">
-                <label
-                  className="text-[13px] mb-[0.3rem]"
-                  htmlFor="description"
-                >
-                  Description
-                </label>
-                <textarea
-                  placeholder="Pink Floyd"
-                  className="w-full h-[80px] rounded-[15px] border-[1px] border-white outline-none bg-transparent p-[0.5rem] text-[15px] appearance-none"
-                  value={release.description}
-                  onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
-                    onUpdateMetadata("description", e.target.value);
-                  }}
-                />
-              </div>
-              <div className="flex flex-col w-full">
-                <label className="text-[13px] mb-[0.3rem]" htmlFor="credits">
-                  Credits
-                </label>
-                <textarea
-                  placeholder="Pink Floyd"
-                  className="w-full h-[80px] rounded-[15px] border-[1px] border-white outline-none bg-transparent p-[0.5rem] text-[15px] appearance-none"
-                  value={release.credits}
-                  onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
-                    onUpdateMetadata("credits", e.target.value);
-                  }}
-                />
-              </div>
-            </section>
-            <section className="flex justify-between mt-[1.5rem]">
-              <div className="flex flex-col w-full">
-                <label
-                  className="text-[13px] mb-[0.3rem]"
-                  htmlFor="Artist Name"
-                >
-                  Artist Name
-                </label>
-                <input
-                  placeholder="Pink Floyd"
-                  className="w-full h-[45px] rounded-[15px] border-[1px] border-white outline-none bg-transparent px-[0.5rem] text-[15px] appearance-none"
-                  value={release.artistName}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                    onUpdateMetadata("artistName", e.target.value);
-                  }}
-                />
-              </div>{" "}
-              <div className="flex flex-col w-full">
-                <label
-                  className="text-[13px] mb-[0.3rem]"
-                  htmlFor="Artist Name"
-                >
-                  Artist Name
-                </label>
-                <input
-                  placeholder="Pink Floyd"
-                  className="w-full h-[45px] rounded-[15px] border-[1px] border-white outline-none bg-transparent px-[0.5rem] text-[15px] appearance-none"
-                  value={release.artistName}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                    onUpdateMetadata("artistName", e.target.value);
-                  }}
-                />
-              </div>{" "}
-              <div className="flex flex-col w-full">
-                <label
-                  className="text-[13px] mb-[0.3rem]"
-                  htmlFor="Artist Name"
-                >
-                  Artist Name
-                </label>
-                <input
-                  placeholder="Pink Floyd"
-                  className="w-full h-[45px] rounded-[15px] border-[1px] border-white outline-none bg-transparent px-[0.5rem] text-[15px] appearance-none"
-                  value={release.artistName}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                    onUpdateMetadata("artistName", e.target.value);
-                  }}
-                />
-              </div>
-            </section>
-
-            <section className="flex justify-between mt-[1.5rem]">
-              <DateInput
-                label="Mint Start Date/Time"
-                property="mintStartDateTime"
-                setRelease={setRelease}
-                value={release.mintStartDateTime}
-              />
-              <DateInput
-                label="Mint End Date/Time"
-                property="mintEndDateTime"
-                setRelease={setRelease}
-                value={release.mintEndDateTime}
-              />
-            </section>
+          <div className="flex flex-col flex-[1] border-r-[1px] border-white pr-[2rem] mr-[1rem] gap-[2rem]">
+            <AddMetadata
+              release={release}
+              setRelease={setRelease}
+              onUpdateMetadata={onUpdateMetadata}
+            />
+            <AddContractData
+              release={release}
+              setRelease={setRelease}
+              onUpdateMetadata={onUpdateMetadata}
+            />
             <section className="flex justify-between mt-[2rem]">
               <SecondaryButton onClick={onSaveDraft} w="200px">
                 Save as draft
