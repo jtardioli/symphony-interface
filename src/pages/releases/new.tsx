@@ -11,37 +11,60 @@ import AddMetadata from "../../components/Features/Releases/AddMetadata";
 import AddTracks from "../../components/Features/Releases/AddTracks";
 import Layout from "../../components/Layouts/Layout";
 import { Release } from "../../ts/releases";
+import { findKeyByFieldName } from "../../utils/file";
 import { emptyRelease } from "../../utils/releases";
 
 const NewRelease: NextPage = () => {
   const [release, setRelease] = useState<Release>(emptyRelease);
 
-  const uploadTrackFiles = async () => {
-    const form = new FormData();
-    form.append("img", release.image as Blob);
-    for (const track of release.tracks) {
-      form.append(`track-${track.id}`, track.file as Blob);
+  /* 
+    Uploads all files to s3 bucket and returns their corresponding keys
+  */
+  const uploadFiles = async () => {
+    try {
+      const form = new FormData();
+      form.append("img", release.image as Blob);
+      for (const track of release.tracks) {
+        form.append(`track-${track.id}`, track.file as Blob);
+      }
+
+      const { data: fileKeys } = await axios.post(uploadsURl, form, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      return fileKeys;
+    } catch (error) {
+      console.log(
+        `releases/new::uploadTrackFiles() - Failed to upload release files: ${error}`
+      );
+      toast.error("Failed to upload music files");
     }
-
-    const { data: fileKeys } = await axios.post(uploadsURl, form, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-
-    return fileKeys;
   };
 
   const onSaveDraft = async () => {
     try {
       const processedRelease = structuredClone(release);
 
-      // const fileKeys = await uploadTrackFiles();
+      const fileKeys = await uploadFiles();
 
-      // processedRelease.image = findKeyByFieldName(fileKeys, "img") as string;
-      // for (const track of processedRelease.tracks) {
-      //   track.file = findKeyByFieldName(fileKeys, `track-${track.id}`) as string;
-      // }
+      processedRelease.image = findKeyByFieldName(fileKeys, "img") as string;
+
+      /* 
+        1. Loop through each track and set its audio value to the new s3 key
+        2. remove track properties key and id as they are not needed 
+        for the databawe insert
+      */
+      for (const track of processedRelease.tracks) {
+        track.audio = findKeyByFieldName(
+          fileKeys,
+          `track-${track.id}`
+        ) as string;
+        delete track.file;
+        delete track.id;
+      }
+
       await axios.post(createReleaseURl, { release: processedRelease });
       toast.success("Release saved as draft");
     } catch (error) {

@@ -18,8 +18,10 @@ export interface Track {
   title: string;
   hidden: boolean;
   position: number;
-  file: File | string | null;
-  id: string;
+  audio: string | null;
+  file?: File | null;
+  id?: string;
+  ownerId: string;
 }
 
 export enum ReleaseType {

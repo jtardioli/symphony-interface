@@ -34,6 +34,8 @@ const AddTracks = ({
       position: clone.tracks.length + 1,
       id: String(Math.random()),
       hidden: false,
+      audio: null,
+      ownerId: "44bd6780-4ea5-431e-9ce4-1175888cd28e",
     });
     setRelease(clone);
   };
@@ -50,7 +52,7 @@ const AddTracks = ({
           >
             <TrackInput
               index={index}
-              id={track.id}
+              id={track.id!}
               position={track.position}
               title={track.title}
               hidden={track.hidden}
