@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 
-import Layout from "../components/Layouts1/Layout";
+import Layout from "../components/Layouts/Layout";
 
 const Home: NextPage = () => {
   return (

@@ -8,7 +8,7 @@ import { PrimaryButton, SecondaryButton } from "../../components/Buttons";
 import AddContractData from "../../components/Features/Releases/AddContractData";
 import AddMetadata from "../../components/Features/Releases/AddMetadata";
 import AddTracks from "../../components/Features/Releases/AddTracks";
-import Layout from "../../components/Layouts1/Layout";
+import Layout from "../../components/Layouts/Layout";
 import { Release } from "../../ts/releases";
 import { emptyRelease } from "../../utils/releases";
 
