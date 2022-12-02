@@ -75,6 +75,7 @@ export const TrackInput = ({
             }}
           />
           <p className="text-[12px] text-grayText px-[5px]">
+            {/* @ts-ignore */}
             {file ? file.name : "example.wav * WAV files only"}
           </p>
         </div>
