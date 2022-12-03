@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import type { NextPage } from "next";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 import { createReleaseURl, uploadsURl } from "../../api/server";
 import { PrimaryButton, SecondaryButton } from "../../components/Buttons";
@@ -15,6 +16,7 @@ import { findKeyByFieldName } from "../../utils/file";
 import { emptyRelease } from "../../utils/releases";
 
 const NewRelease: NextPage = () => {
+  const router = useRouter();
   const [release, setRelease] = useState<Release>(emptyRelease);
 
   /* 
@@ -39,7 +41,9 @@ const NewRelease: NextPage = () => {
       console.log(
         `releases/new::uploadTrackFiles() - Failed to upload release files: ${error}`
       );
-      toast.error("Failed to upload music files");
+      throw Error(
+        `releases/new::uploadTrackFiles() - Failed to save draft: ${error}`
+      );
     }
   };
 
@@ -52,9 +56,9 @@ const NewRelease: NextPage = () => {
       processedRelease.image = findKeyByFieldName(fileKeys, "img") as string;
 
       /* 
-        1. Loop through each track and set its audio value to the new s3 key
+        1. Loop through each track and set its audio value to the new S3 key
         2. remove track properties key and id as they are not needed 
-        for the databawe insert
+        for the db insert
       */
       for (const track of processedRelease.tracks) {
         track.audio = findKeyByFieldName(
@@ -66,12 +70,14 @@ const NewRelease: NextPage = () => {
       }
 
       await axios.post(createReleaseURl, { release: processedRelease });
-      toast.success("Release saved as draft");
+      router.push("/home");
     } catch (error) {
       console.log(
         `releases/new::onSaveDraft() - Failed to save draft: ${error}`
       );
-      toast.error("Failed to save release");
+      throw Error(
+        `releases/new::onSaveDraft() - Failed to save draft: ${error}`
+      );
     }
   };
 
@@ -108,7 +114,17 @@ const NewRelease: NextPage = () => {
               onUpdateMetadata={onUpdateMetadata}
             />
             <section className="flex justify-between">
-              <SecondaryButton onClick={onSaveDraft} w="200px">
+              <SecondaryButton
+                onClick={() => {
+                  toast.promise(onSaveDraft, {
+                    pending:
+                      "Processing your music files. This could take a few minutes",
+                    success: "Release saved successfully",
+                    error: "Failed to save release 🤯",
+                  });
+                }}
+                w="200px"
+              >
                 Save as draft
               </SecondaryButton>
               <PrimaryButton w="200px">Deploy NFT</PrimaryButton>
