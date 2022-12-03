@@ -47,7 +47,7 @@ const NewRelease: NextPage = () => {
     }
   };
 
-  const onSaveDraft = async () => {
+  const saveDraft = async () => {
     try {
       const processedRelease = structuredClone(release);
 
@@ -72,13 +72,17 @@ const NewRelease: NextPage = () => {
       await axios.post(createReleaseURl, { release: processedRelease });
       router.push("/home");
     } catch (error) {
-      console.log(
-        `releases/new::onSaveDraft() - Failed to save draft: ${error}`
-      );
-      throw Error(
-        `releases/new::onSaveDraft() - Failed to save draft: ${error}`
-      );
+      console.log(`releases/new::saveDraft() - Failed to save draft: ${error}`);
+      throw Error(`releases/new::saveDraft() - Failed to save draft: ${error}`);
     }
+  };
+
+  const onSaveDraft = () => {
+    toast.promise(saveDraft, {
+      pending: "Processing your music files. This could take a few minutes",
+      success: "Release saved successfully",
+      error: "Failed to save release 🤯",
+    });
   };
 
   const onUpdateMetadata = (
@@ -114,17 +118,7 @@ const NewRelease: NextPage = () => {
               onUpdateMetadata={onUpdateMetadata}
             />
             <section className="flex justify-between">
-              <SecondaryButton
-                onClick={() => {
-                  toast.promise(onSaveDraft, {
-                    pending:
-                      "Processing your music files. This could take a few minutes",
-                    success: "Release saved successfully",
-                    error: "Failed to save release 🤯",
-                  });
-                }}
-                w="200px"
-              >
+              <SecondaryButton onClick={onSaveDraft} w="200px">
                 Save as draft
               </SecondaryButton>
               <PrimaryButton w="200px">Deploy NFT</PrimaryButton>
