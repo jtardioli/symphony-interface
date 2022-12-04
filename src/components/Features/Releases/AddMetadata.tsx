@@ -1,6 +1,7 @@
 import React, { ChangeEvent, Dispatch, SetStateAction } from "react";
 
 import { Release, ReleaseType } from "../../../ts/releases";
+import GenreInput from "../../Inputs/GenreInput";
 import LabeledInput from "../../Inputs/LabeledInput";
 
 import ImageUpload from "./ImageUpload";
@@ -56,6 +57,7 @@ const AddMetadata = ({ release, setRelease, onUpdateMetadata }: Props) => {
         </div>
       </section>
       <section className="flex flex-col gap-[2rem]">
+        <GenreInput />
         <div className="flex flex-col w-full">
           <label className="text-[13px] mb-[0.3rem]" htmlFor="description">
             Description
@@ -67,15 +69,6 @@ const AddMetadata = ({ release, setRelease, onUpdateMetadata }: Props) => {
             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
               onUpdateMetadata("description", e.target.value);
             }}
-          />
-        </div>
-        <div className="flex flex-col w-full">
-          <label className="text-[13px] mb-[0.3rem]" htmlFor="Artist Name">
-            Genre(s)
-          </label>
-          <input
-            placeholder="Pink Floyd"
-            className="w-full h-[45px] rounded-[15px] border-[1px] border-white outline-none bg-transparent px-[0.5rem] text-[15px] appearance-none"
           />
         </div>
       </section>

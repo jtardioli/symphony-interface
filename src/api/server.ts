@@ -5,3 +5,6 @@ export const createReleaseURl = `${serverBaseURL}/releases`;
 
 // Uploads
 export const uploadsURl = `${serverBaseURL}/uploads`;
+
+// Genres
+export const genresURl = `${serverBaseURL}/genres`;
