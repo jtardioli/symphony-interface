@@ -3,7 +3,7 @@ import { AiFillDelete, AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { MdDragHandle } from "react-icons/md";
 
 import { updateTrackPositions } from "../../services/releases";
-import { Release } from "../../ts/releases";
+import { Release } from "../../interfaces/releases";
 
 interface TrackInputProps {
   index: number;

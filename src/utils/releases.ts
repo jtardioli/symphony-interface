@@ -1,4 +1,4 @@
-import { Release, ReleaseType, Track } from "../ts/releases";
+import { Release, ReleaseType, Track } from "../interfaces/releases";
 
 export const emptyTrack: Track = {
   audio: null,

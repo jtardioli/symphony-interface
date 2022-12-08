@@ -8,3 +8,7 @@ export const uploadsURl = `${serverBaseURL}/uploads`;
 
 // Genres
 export const genresURl = `${serverBaseURL}/genres`;
+
+//Users
+export const usersURl = `${serverBaseURL}/users`;
+export const getUserUrl = (id: string) => `${usersURl}/${id}`;

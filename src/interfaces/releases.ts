@@ -1,3 +1,5 @@
+import { Genre } from "./genre";
+
 export interface Release {
   id: string;
   ownerId: string;
@@ -9,7 +11,7 @@ export interface Release {
   royaltyPercentage: number | null;
   title: string;
   tracks: Track[];
-  genres: string[];
+  genres: Partial<Genre>[];
   releaseType: ReleaseType;
   isDeployed: boolean;
 }

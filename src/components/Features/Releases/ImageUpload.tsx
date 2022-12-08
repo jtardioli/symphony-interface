@@ -2,7 +2,7 @@ import React, { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { BsFillCloudUploadFill } from "react-icons/bs";
 import Image from "next/image";
 
-import { Release } from "../../../ts/releases";
+import { Release } from "../../../interfaces/releases";
 import { toBase64 } from "../../../utils/file";
 
 const ImageUpload = ({

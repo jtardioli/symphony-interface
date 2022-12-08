@@ -1,19 +1,44 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { AiFillCloseCircle } from "react-icons/ai";
 import { toast } from "react-toastify";
 import axios from "axios";
 
 import { genresURl } from "../../api/server";
+import { Genre } from "../../interfaces/genre";
+import { Release } from "../../interfaces/releases";
 
-interface Genre {
-  id: string;
-  name: string;
-  releaseCount: number;
+interface Props {
+  release: Release;
+  setRelease: Dispatch<SetStateAction<Release>>;
 }
 
-const GenreInput = () => {
+const GenreInput = ({ release, setRelease }: Props) => {
   const [query, setQuery] = useState<string>("");
+
+  /* 
+    Genres fetched from the api for the user to select
+  */
   const [genres, setGenres] = useState<Genre[]>([]);
+
   const [displayGenres, setDisplayGenres] = useState<boolean>(false);
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    /* 
+      Hide genre drop down when user clicks away from the custom input 
+    */
+    document.addEventListener("click", (e) => {
+      setDisplayGenres(false);
+    });
+  });
 
   useEffect(() => {
     (async () => {
@@ -30,6 +55,30 @@ const GenreInput = () => {
     })();
   }, [query]);
 
+  const handleAddGenre = (newGenre: Genre) => {
+    const duplicateGenre = release.genres.find((genre) => {
+      return genre.id === newGenre.id;
+    });
+    if (duplicateGenre) return;
+    const newRelease = structuredClone(release);
+    newRelease.genres.push(newGenre);
+    setRelease(newRelease);
+
+    inputRef.current!.focus();
+    setQuery("");
+  };
+
+  const handleDeleteGenre = (id: string) => {
+    const index = release.genres.findIndex((genre) => {
+      return genre?.id === id;
+    });
+
+    const newRelease = structuredClone(release);
+    newRelease.genres.splice(index, 1);
+    setRelease(newRelease);
+    inputRef.current?.focus();
+  };
+
   const renderedGenres = genres.map((genre, index) => {
     const lastGenre = index === genres.length - 1;
     return (
@@ -38,6 +87,9 @@ const GenreInput = () => {
         ${
           lastGenre && "rounded-b-[15px]"
         } flex items-center justify-between w-full h-[45px]  border-[1px] border-white outline-none bg-transparent px-[0.5rem] text-[15px] `}
+        onClick={() => {
+          handleAddGenre(genre);
+        }}
       >
         <p> {genre.name}</p>
         <p>({genre.releaseCount})</p>
@@ -45,29 +97,74 @@ const GenreInput = () => {
     );
   });
 
+  const renderedSelectedGenres = release.genres.map((genre) => {
+    return (
+      <Tag
+        id={genre?.id!}
+        label={genre?.name!}
+        onDeleteGenre={handleDeleteGenre}
+      />
+    );
+  });
+
   return (
     <div className="relative flex flex-col w-full">
       <label className="text-[13px] mb-[0.3rem]" htmlFor="Artist Name">
-        Genre(s)
+        Genre(s) - search and select genres from the dropdown
       </label>
-      <input
-        placeholder="Pink Floyd"
+
+      <div
         className={`${
           displayGenres ? "rounded-t-[15px]" : "rounded-[15px]"
-        } w-full h-[45px]  border-[1px] border-white outline-none bg-transparent px-[0.5rem] text-[15px]`}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => {
-          setQuery(e.target.value);
-        }}
-        onFocus={() => {
+        } flex items-center gap-2  h-[45px]  border-[1px] border-white outline-none bg-transparent px-[0.5rem] text-[15px hover:cursor-text max-w-[30vw] min-w-full overflow-x-scroll`}
+        onClick={(e) => {
+          e.stopPropagation();
           setDisplayGenres(true);
+          inputRef.current?.focus();
         }}
-        onBlur={() => {
-          setDisplayGenres(false);
+      >
+        {renderedSelectedGenres}
+
+        <input
+          className="h-full outline-none bg-transparent px-[0.5rem] text-[15px]"
+          value={query}
+          ref={inputRef}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => {
+            setQuery(e.target.value);
+          }}
+        />
+      </div>
+      <div
+        className="flex-col top-[69px] absolute w-full bg-gradient-to-t from-bg to-[#292929]"
+        onClick={(e) => {
+          e.stopPropagation();
+          inputRef.current?.focus();
         }}
-      />
-      <div className=" top-[69px] absolute w-full bg-gradient-to-t from-bg to-[#292929]">
+      >
         {displayGenres && renderedGenres}
       </div>
+    </div>
+  );
+};
+
+interface TagProps {
+  label: string;
+  id: string;
+  onDeleteGenre: (id: string) => void;
+}
+
+export const Tag = ({ label, id, onDeleteGenre }: TagProps) => {
+  return (
+    <div className="flex items-center gap-1  h-[60%] bg-primary px-2 rounded-[5px]">
+      <p className="text-xs w-[max-content]">{label}</p>
+      <button
+        onClick={(e) => {
+          onDeleteGenre(id);
+        }}
+        className="hover:cursor-pointer"
+      >
+        <AiFillCloseCircle />
+      </button>
     </div>
   );
 };

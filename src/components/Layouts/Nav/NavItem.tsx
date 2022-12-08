@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import { Url } from "../../../ts/utils";
+import { Url } from "../../../interfaces/utils";
 
 interface Props {
   href: Url;
@@ -10,7 +10,7 @@ interface Props {
 
 const NavItem = ({ href, label }: Props) => {
   const router = useRouter();
-  const selected = router.pathname === href;
+  const selected = router.asPath === href;
 
   return (
     <Link href={href}>

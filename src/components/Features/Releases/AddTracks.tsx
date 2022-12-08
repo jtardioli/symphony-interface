@@ -1,8 +1,8 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
+import { Release } from "../../../interfaces/releases";
 import { updateTrackPositions } from "../../../services/releases";
-import { Release } from "../../../ts/releases";
 import { TrackInput } from "../../Inputs/TrackInput";
 
 const AddTracks = ({

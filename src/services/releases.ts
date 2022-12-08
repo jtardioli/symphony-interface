@@ -1,4 +1,4 @@
-import { Release } from "../ts/releases";
+import { Release } from "../interfaces/releases";
 
 export const updateTrackPositions = (release: Release) => {
   release.tracks.forEach((track, index) => {

@@ -1,6 +1,6 @@
 import React, { ChangeEvent, Dispatch, SetStateAction } from "react";
 
-import { Release } from "../../../ts/releases";
+import { Release } from "../../../interfaces/releases";
 
 interface Props {
   release: Release;

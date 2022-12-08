@@ -11,7 +11,7 @@ import AddContractData from "../../components/Features/Releases/AddContractData"
 import AddMetadata from "../../components/Features/Releases/AddMetadata";
 import AddTracks from "../../components/Features/Releases/AddTracks";
 import Layout from "../../components/Layouts/Layout";
-import { Release } from "../../ts/releases";
+import { Release } from "../../interfaces/releases";
 import { findKeyByFieldName } from "../../utils/file";
 import { emptyRelease } from "../../utils/releases";
 
@@ -68,6 +68,13 @@ const NewRelease: NextPage = () => {
         delete track.file;
         delete track.id;
       }
+
+      /* 
+        make sure genres only have id property for db connection
+      */
+      processedRelease.genres = processedRelease.genres.map((genre) => {
+        return { id: genre.id };
+      });
 
       await axios.post(createReleaseURl, { release: processedRelease });
       router.push("/home");

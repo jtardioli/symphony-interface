@@ -1,6 +1,6 @@
 import React, { ChangeEvent, Dispatch, SetStateAction } from "react";
 
-import { Release, ReleaseType } from "../../../ts/releases";
+import { Release, ReleaseType } from "../../../interfaces/releases";
 import GenreInput from "../../Inputs/GenreInput";
 import LabeledInput from "../../Inputs/LabeledInput";
 
@@ -15,7 +15,7 @@ interface Props {
 const AddMetadata = ({ release, setRelease, onUpdateMetadata }: Props) => {
   return (
     <>
-      <section className="flex justify-between max-h-[250px] ">
+      <section className="flex justify-between max-h-[250px]">
         <label htmlFor="image" className="hover:cursor-pointer">
           <ImageUpload setRelease={setRelease} />
         </label>
@@ -57,7 +57,7 @@ const AddMetadata = ({ release, setRelease, onUpdateMetadata }: Props) => {
         </div>
       </section>
       <section className="flex flex-col gap-[2rem]">
-        <GenreInput />
+        <GenreInput release={release} setRelease={setRelease} />
         <div className="flex flex-col w-full">
           <label className="text-[13px] mb-[0.3rem]" htmlFor="description">
             Description
