@@ -121,14 +121,13 @@ const NewRelease: NextPage = () => {
             />
             <AddContractData
               release={release}
-              setRelease={setRelease}
               onUpdateMetadata={onUpdateMetadata}
             />
             <section className="flex justify-between">
-              <SecondaryButton onClick={onSaveDraft} w="200px">
+              <SecondaryButton onClick={onSaveDraft}>
                 Save as draft
               </SecondaryButton>
-              <PrimaryButton w="200px">Deploy NFT</PrimaryButton>
+              <PrimaryButton>Deploy NFT</PrimaryButton>
             </section>
           </div>
           <AddTracks release={release} setRelease={setRelease} />

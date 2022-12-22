@@ -1,10 +1,10 @@
 import { ReactNode } from "react";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 import { useAuth } from "../../contexts/AuthContext";
-import { PrimaryButton } from "../Buttons";
+import SignInModal from "../Modals/SignInModal";
 
 import Nav from "./Nav/Nav";
+import LayoutHeader from "./LayoutHeader";
 
 const Layout = ({ children }: { children: ReactNode }) => {
   const { signInWithEthereum, isAuthenticated } = useAuth();
@@ -17,14 +17,11 @@ const Layout = ({ children }: { children: ReactNode }) => {
       <div className="h-[30vh] bg-gradient-to-t from-bg to-[#292929] top-[7vh] w-full -z-10 fixed"></div>
       {/* Main Content*/}
       <div className="w-full ml-[15vw]">
-        <header className=" bg-bg h-[7vh] max-h-[70px] sticky z-20 top-0 flex items-center justify-end px-[1rem]">
-          <ConnectButton accountStatus="address" />
-          <PrimaryButton onClick={signInWithEthereum} w="200px">
-            Sign In
-          </PrimaryButton>
-          <p>{isAuthenticated ? "YAY" : "NOOo"} </p>
-        </header>
-        <div className="p-[2rem]">{children}</div>
+        <LayoutHeader />
+        <div className="p-[2rem]">
+          <SignInModal />
+          {children}
+        </div>
       </div>
     </div>
   );
