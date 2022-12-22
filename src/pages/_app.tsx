@@ -9,6 +9,8 @@ import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { infuraProvider } from "wagmi/providers/infura";
 import { publicProvider } from "wagmi/providers/public";
 
+import { AuthProvider } from "../contexts/AuthContext";
+
 import "../styles/globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -41,8 +43,10 @@ function MyApp({ Component, pageProps }: AppProps) {
         })}
         chains={chains}
       >
-        <Component {...pageProps} />]
-        <ToastContainer theme="dark" autoClose={3200} />
+        <AuthProvider>
+          <Component {...pageProps} />]
+          <ToastContainer theme="dark" autoClose={3200} />
+        </AuthProvider>
       </RainbowKitProvider>
     </WagmiConfig>
   );

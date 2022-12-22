@@ -1,14 +1,14 @@
-import React, { ChangeEvent, Dispatch, SetStateAction } from "react";
+import React, { ChangeEvent } from "react";
 
 import { Release } from "../../../interfaces/releases";
 
 interface Props {
   release: Release;
-  setRelease: Dispatch<SetStateAction<Release>>;
   onUpdateMetadata: (key: keyof Release, value: string | number | null) => void;
 }
 
-const AddContractData = ({ release, setRelease, onUpdateMetadata }: Props) => {
+const AddContractData = ({ release, onUpdateMetadata }: Props) => {
+  const { mintPrice, maxNumMints, royaltyPercentage } = release;
   return (
     <>
       <section className="flex justify-between gap-[2rem]">
@@ -19,7 +19,7 @@ const AddContractData = ({ release, setRelease, onUpdateMetadata }: Props) => {
           <input
             placeholder="0.05"
             className="w-full h-[45px] rounded-[15px] border-[1px] border-white outline-none bg-transparent px-[0.5rem] text-[15px] appearance-none"
-            value={release.mintPrice ?? ""}
+            value={mintPrice ?? ""}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
               if (e.target.value.length === 0) {
                 onUpdateMetadata("mintPrice", null);
@@ -37,7 +37,7 @@ const AddContractData = ({ release, setRelease, onUpdateMetadata }: Props) => {
           <input
             placeholder="5000"
             className="w-full h-[45px] rounded-[15px] border-[1px] border-white outline-none bg-transparent px-[0.5rem] text-[15px] appearance-none"
-            value={release.maxNumMints ?? ""}
+            value={maxNumMints ?? ""}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
               if (e.target.value.length === 0) {
                 onUpdateMetadata("maxNumMints", null);
@@ -58,7 +58,7 @@ const AddContractData = ({ release, setRelease, onUpdateMetadata }: Props) => {
           <input
             placeholder="10"
             className="w-full h-[45px] rounded-[15px] border-[1px] border-white outline-none bg-transparent px-[0.5rem] text-[15px] appearance-none"
-            value={release.royaltyPercentage ?? ""}
+            value={royaltyPercentage ?? ""}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
               if (e.target.value.length === 0) {
                 onUpdateMetadata("royaltyPercentage", null);

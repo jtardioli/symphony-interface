@@ -32,9 +32,6 @@ const GenreInput = ({ release, setRelease }: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    /* 
-      Hide genre drop down when user clicks away from the custom input 
-    */
     document.addEventListener("click", (e) => {
       setDisplayGenres(false);
     });
@@ -116,7 +113,7 @@ const GenreInput = ({ release, setRelease }: Props) => {
       <div
         className={`${
           displayGenres ? "rounded-t-[15px]" : "rounded-[15px]"
-        } flex items-center gap-2  h-[45px]  border-[1px] border-white outline-none bg-transparent px-[0.5rem] text-[15px hover:cursor-text max-w-[30vw] min-w-full overflow-x-scroll`}
+        } flex items-center gap-2  h-[45px]  border-[1px] border-white outline-none bg-transparent px-[0.5rem] text-[15px hover:cursor-text max-w-[30vw] min-w-full overflow-x-scroll scrollbar-hide`}
         onClick={(e) => {
           e.stopPropagation();
           setDisplayGenres(true);

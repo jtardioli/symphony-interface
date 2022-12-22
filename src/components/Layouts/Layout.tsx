@@ -1,9 +1,13 @@
 import { ReactNode } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
+import { useAuth } from "../../contexts/AuthContext";
+import { PrimaryButton } from "../Buttons";
+
 import Nav from "./Nav/Nav";
 
 const Layout = ({ children }: { children: ReactNode }) => {
+  const { signInWithEthereum, isAuthenticated } = useAuth();
   return (
     <div className="flex h-screen w-[100%]">
       <Nav />
@@ -15,6 +19,10 @@ const Layout = ({ children }: { children: ReactNode }) => {
       <div className="w-full ml-[15vw]">
         <header className=" bg-bg h-[7vh] max-h-[70px] sticky z-20 top-0 flex items-center justify-end px-[1rem]">
           <ConnectButton accountStatus="address" />
+          <PrimaryButton onClick={signInWithEthereum} w="200px">
+            Sign In
+          </PrimaryButton>
+          <p>{isAuthenticated ? "YAY" : "NOOo"} </p>
         </header>
         <div className="p-[2rem]">{children}</div>
       </div>

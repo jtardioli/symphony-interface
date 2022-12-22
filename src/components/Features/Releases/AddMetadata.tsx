@@ -13,6 +13,7 @@ interface Props {
 }
 
 const AddMetadata = ({ release, setRelease, onUpdateMetadata }: Props) => {
+  const { title, artistName, description } = release;
   return (
     <>
       <section className="flex justify-between max-h-[250px]">
@@ -23,7 +24,7 @@ const AddMetadata = ({ release, setRelease, onUpdateMetadata }: Props) => {
 
         <div className="flex flex-col justify-between w-full">
           <LabeledInput
-            value={release.title}
+            value={title}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
               onUpdateMetadata("title", e.target.value);
             }}
@@ -31,7 +32,7 @@ const AddMetadata = ({ release, setRelease, onUpdateMetadata }: Props) => {
             placeHolder="The Dark Side Of The Moon"
           />
           <LabeledInput
-            value={release.artistName}
+            value={artistName}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
               onUpdateMetadata("artistName", e.target.value);
             }}
@@ -65,7 +66,7 @@ const AddMetadata = ({ release, setRelease, onUpdateMetadata }: Props) => {
           <textarea
             placeholder="The Dark Side of the Moon is the eighth studio album by the English rock band Pink Floyd..."
             className="w-full h-[80px] rounded-[15px] border-[1px] border-white outline-none bg-transparent p-[0.5rem] text-[15px] appearance-none"
-            value={release.description}
+            value={description}
             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
               onUpdateMetadata("description", e.target.value);
             }}
