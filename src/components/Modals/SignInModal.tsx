@@ -52,13 +52,14 @@ const SignInModal = () => {
   const showCreateAccount = address && isVerified && !user;
 
   return (
-    <Modal isOpen={isOpen} handleClose={handleClose} title="Verification">
+    <Modal isOpen={isOpen} handleClose={handleClose}>
       <div className="flex flex-col items-center justify-center w-full gap-2">
         {!address && <ConnectButton />}
         {showVerify && (
           <>
-            <p>Prove you own this wallet</p>
-            <PrimaryButton onClick={handleSignIn}>Sign In</PrimaryButton>
+            <p className="text-2xl leading-[20px] ">Sign a message from your</p>
+            <p className="mb-3 text-2xl "> wallet to sign in</p>
+            <PrimaryButton onClick={handleSignIn}>Sign in</PrimaryButton>
           </>
         )}
         {showCreateAccount && (

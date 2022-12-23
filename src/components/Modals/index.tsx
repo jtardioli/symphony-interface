@@ -4,7 +4,7 @@ import { AiOutlineClose } from "react-icons/ai";
 interface Props {
   isOpen: boolean;
   handleClose: () => void;
-  title: string;
+  title?: string;
   children: ReactNode;
 }
 
