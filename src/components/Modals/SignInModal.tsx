@@ -39,6 +39,14 @@ const SignInModal = () => {
     }
   };
 
+  const handleSignIn = async () => {
+    await signInWithEthereum();
+    const { user } = await updateAuthenticated(address);
+    if (user) {
+      handleClose();
+    }
+  };
+
   const showVerify = address && !isVerified;
 
   const showCreateAccount = address && isVerified && !user;
@@ -50,7 +58,7 @@ const SignInModal = () => {
         {showVerify && (
           <>
             <p>Prove you own this wallet</p>
-            <PrimaryButton onClick={signInWithEthereum}>Sign In</PrimaryButton>
+            <PrimaryButton onClick={handleSignIn}>Sign In</PrimaryButton>
           </>
         )}
         {showCreateAccount && (

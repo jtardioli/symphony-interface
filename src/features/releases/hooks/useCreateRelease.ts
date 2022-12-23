@@ -115,7 +115,7 @@ const useCreateRelease = () => {
 
 export default useCreateRelease;
 
-export const emptyTrack: Track = {
+const emptyTrack: Track = {
   audio: null,
   title: "",
   file: null,
@@ -125,7 +125,7 @@ export const emptyTrack: Track = {
   ownerId: "",
 };
 
-export const emptyRelease: Release = {
+const emptyRelease: Release = {
   id: "",
   ownerId: "",
   artistName: "",
