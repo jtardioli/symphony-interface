@@ -1,9 +1,5 @@
 /* 
-  When a file is sent to the backend using FromData it is given a fieldname. 
-  this acts as an object key. This function returns the AWS url key associated with that file name.
-*/
-/* 
- Usefull for displaying image files as this creates a readable Url
+ Useful for displaying image files as this creates a readable Url
 */
 export const toBase64 = (file: File) =>
   new Promise((resolve, reject) => {
@@ -15,7 +11,7 @@ export const toBase64 = (file: File) =>
 
 /* 
   When a file is sent to the backend using FromData it is given a fieldname. 
-  Ex: form.append(img, <file>) img is the feildname
+  Ex: form.append(img, <file>) img is the fieldname
  This function returns the AWS url key associated with that file name.
 */
 export const findKeyByFieldName = (

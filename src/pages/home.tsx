@@ -1,10 +1,14 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
+import { useRouter } from "next/router";
 
+import { PrimaryButton } from "../components/Buttons";
 import Layout from "../components/Layouts/Layout";
+import { useAuth } from "../contexts/AuthContext";
 
 const Home: NextPage = () => {
+  const { isAuthenticated, handleOpen } = useAuth();
+  const router = useRouter();
   return (
     <>
       <Head>
@@ -20,11 +24,18 @@ const Home: NextPage = () => {
           <h1 className="text-3xl mt-[20vh] mb-[3rem]">
             No albums have been minted yet 😭
           </h1>
-          <Link href="/releases/new">
-            <button className="w-[200px] h-[40px] text-white rounded-[15px] bg-primary font-normal">
-              Create Release
-            </button>
-          </Link>
+
+          <PrimaryButton
+            onClick={() => {
+              if (!isAuthenticated) {
+                handleOpen();
+                return;
+              }
+              router.push("/releases/new");
+            }}
+          >
+            Create Release
+          </PrimaryButton>
         </div>
       </Layout>
     </>

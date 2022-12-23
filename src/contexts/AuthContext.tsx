@@ -26,8 +26,9 @@ if (typeof window !== "undefined") {
 type AccountStatus = "disconnected" | "connecting" | "connected";
 
 interface UpdateAuthenticated {
-  isAuthenticated: boolean;
-  addres: string;
+  isVerified: boolean;
+  address: string;
+  user: any;
 }
 
 interface AuthContext {
@@ -35,10 +36,15 @@ interface AuthContext {
   address: string;
   addressEns: string;
   signInWithEthereum: () => Promise<void>;
+  isVerified: boolean;
+  user: any;
   isAuthenticated: boolean;
   updateAuthenticated: (addr: string) => Promise<UpdateAuthenticated>;
   isAuthenticating: boolean;
   isError: boolean;
+  isOpen: boolean;
+  handleOpen: () => void;
+  handleClose: () => void;
 }
 
 class AuthProviderError extends Error {
@@ -64,19 +70,31 @@ export const AuthProvider: FunctionComponent<{ children: ReactNode }> = ({
   children,
 }) => {
   const { data: signer } = useSigner();
+  const network = useNetwork();
+  /* 
+    Address
+  */
   const { address: wagmiAddress, status: wagmiStatus } = useAccount();
   const debouncedAddress = useDebounce(wagmiAddress, walletChangeDelay);
   const [accountStatus, setAccountStatus] =
     useState<AccountStatus>("disconnected");
   const [address, setAddress] = useState("");
+  const { data: addressEns } = useEnsName({ address });
 
-  const network = useNetwork();
+  const [user, setUser] = useState(null);
+  const [isVerified, setIsVerified] = useState<boolean>(false);
 
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isAuthenticating, setIsAuthenticating] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
 
-  const { data: addressEns } = useEnsName({ address });
+  const isAuthenticated = !!address && isVerified && !!user;
+
+  /* 
+    Modal
+  */
+  const [isOpen, setIsOpen] = useState(false);
+  const handleOpen = () => setIsOpen(true);
+  const handleClose = () => setIsOpen(false);
 
   useEffect(() => {
     /**
@@ -106,20 +124,18 @@ export const AuthProvider: FunctionComponent<{ children: ReactNode }> = ({
           /** Important: Reset state to connecting */
           setAccountStatus("connecting");
 
-          const { isAuthenticated } = await updateAuthenticated(
-            debouncedAddress
-          );
+          const { isVerified } = await updateAuthenticated(debouncedAddress);
 
           /** Error state */
-          if (isAuthenticated === null) {
+          if (isVerified === null) {
             throw new Error(
-              "updateAuthenticated() returned { isAuthenticated: null }"
+              "updateAuthenticated() returned { isVerified: null }"
             );
           }
 
           setAddress(debouncedAddress);
           setAccountStatus("connected");
-          if (isAuthenticated === false) {
+          if (isVerified === false) {
             // TODO: OPEN MODAL?
           }
         } else {
@@ -192,30 +208,35 @@ export const AuthProvider: FunctionComponent<{ children: ReactNode }> = ({
     try {
       setIsError(false);
       setIsAuthenticating(true);
-      const res = await axios.get(isAuthUrl(addr), {
+      const res = await axios.get<{
+        isVerified: boolean;
+        address: string;
+        user: any;
+      }>(isAuthUrl(addr), {
         withCredentials: true,
         validateStatus: (status) =>
           (status >= 200 && status < 300) || status === 500,
       });
-      const { isAuthenticated, address: addressOfAuthData } = res.data;
+      const { isVerified, address: addressOfAuthData, user } = res.data;
 
       if (globalAddress.toLowerCase() === addressOfAuthData.toLowerCase()) {
-        setIsAuthenticated(isAuthenticated);
+        setIsVerified(isVerified);
+        setUser(user);
         return res.data;
       }
       console.log(
         `AuthProvider::updateAuthenticated() - Discarding auth data received for wallet ${addressOfAuthData}`
       );
-      return { isAuthenticated: null };
+      return { isVerified: false, user: null, address: addressOfAuthData };
     } catch (err: any) {
       console.error(
         `AuthProvider.updateAuthenticated() - ${err?.message || err}`
       );
       setIsError(true);
+      return { isVerified: false, user: null, address: "" };
     } finally {
       setIsAuthenticating(false);
     }
-    return { isAuthenticated: null };
   };
 
   const value: AuthContext = {
@@ -223,10 +244,15 @@ export const AuthProvider: FunctionComponent<{ children: ReactNode }> = ({
     address,
     addressEns: addressEns ? addressEns : shrinkAddress(address),
     signInWithEthereum,
+    isVerified,
+    user,
     isAuthenticated,
     updateAuthenticated,
     isAuthenticating,
     isError,
+    isOpen,
+    handleOpen,
+    handleClose,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

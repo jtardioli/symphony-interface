@@ -1,9 +1,10 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
+import { TrackInput } from "../../../components/Inputs/TrackInput";
+import { useAuth } from "../../../contexts/AuthContext";
 import { Release } from "../../../interfaces/releases";
 import { updateTrackPositions } from "../../../services/releases";
-import { TrackInput } from "../../Inputs/TrackInput";
 
 const AddTracks = ({
   release,
@@ -12,6 +13,7 @@ const AddTracks = ({
   release: Release;
   setRelease: Dispatch<SetStateAction<Release>>;
 }) => {
+  const { user } = useAuth();
   const onDragEnd = (params: any) => {
     const clone = structuredClone(release);
 
@@ -35,7 +37,7 @@ const AddTracks = ({
       id: String(Math.random()),
       hidden: false,
       audio: null,
-      ownerId: "44bd6780-4ea5-431e-9ce4-1175888cd28e",
+      ownerId: user.id,
     });
     setRelease(clone);
   };

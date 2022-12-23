@@ -12,7 +12,7 @@ export const PrimaryButton: FC<Props> = ({ w, children, onClick }) => {
   return (
     <button
       onClick={onClick}
-      className={`${w} h-[40px] text-white rounded-[15px] bg-primary font-normal`}
+      className={`${w} h-[40px] text-white rounded-[15px] bg-primary font-normal hover:bg-opacity-80`}
     >
       {children}
     </button>
@@ -26,7 +26,7 @@ PrimaryButton.defaultProps = {
 export const SecondaryButton: FC<Props> = ({ w, children, onClick }) => {
   return (
     <button
-      className={`${w}  h-[40px] text-black rounded-[15px] bg-darkWhite font-normal hover:bg-white flex justify-center items-center`}
+      className={`${w}  h-[40px] text-black rounded-[15px] bg-darkWhite font-normal hover:bg-opacity-90 flex justify-center items-center`}
       onClick={onClick}
     >
       {children}

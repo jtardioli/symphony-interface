@@ -5,7 +5,7 @@ export const isAuthUrl = (address: string) => {
   return `${apiBaseUrl}/auth/isAuthenticated/${address}`;
 };
 export const nonceUrl = `${apiBaseUrl}/auth/nonce`;
-export const signInUrl = `${apiBaseUrl}/auth/sign-in`;
+export const signInUrl = `${apiBaseUrl}/auth/verify`;
 
 // Releases
 export const createReleaseURl = `${apiBaseUrl}/releases`;

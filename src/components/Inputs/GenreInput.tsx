@@ -155,7 +155,7 @@ export const Tag = ({ label, id, onDeleteGenre }: TagProps) => {
     <div className="flex items-center gap-1  h-[60%] bg-primary px-2 rounded-[5px]">
       <p className="text-xs w-[max-content]">{label}</p>
       <button
-        onClick={(e) => {
+        onClick={() => {
           onDeleteGenre(id);
         }}
         className="hover:cursor-pointer"

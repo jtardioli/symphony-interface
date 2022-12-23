@@ -89,7 +89,7 @@ export const TrackInput = ({
             className="hidden"
             onChange={handleTrackUpload}
           />
-          <div className="w-[100px] h-[35px] text-black rounded-[15px] bg-darkWhite font-normal mr-[0.5rem] flex justify-center items-center">
+          <div className="w-[100px]  h-[40px] text-black rounded-[15px] bg-white font-normal hover:bg-opacity-90 flex justify-center items-center mr-2">
             Upload
           </div>
         </label>
