@@ -15,7 +15,7 @@ const NavItem = ({ href, label }: Props) => {
   return (
     <Link href={href}>
       <p
-        className={`mb-[0.5rem] hover:cursor-pointer capitalize ${
+        className={`mb-[0.5rem] hover:cursor-pointer capitalize hover:text-darkWhite ${
           !selected && "text-grayText"
         } `}
       >

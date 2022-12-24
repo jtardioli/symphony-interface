@@ -1,10 +1,10 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
-import { TrackInput } from "../../../components/Inputs/TrackInput";
-import { useAuth } from "../../../contexts/AuthContext";
-import { Release } from "../../../interfaces/releases";
-import { updateTrackPositions } from "../../../services/releases";
+import { TrackInput } from "../../../../components/Inputs/TrackInput";
+import { useAuth } from "../../../../contexts/AuthContext";
+import { Release } from "../../../../interfaces/releases";
+import { updateTrackPositions } from "../../../../services/releases";
 
 const AddTracks = ({
   release,

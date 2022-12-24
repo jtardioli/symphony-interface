@@ -10,7 +10,7 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import { toast } from "react-toastify";
 import axios from "axios";
 
-import { genresURl } from "../../api/server";
+import { genresURl } from "../../api/api";
 import { Genre } from "../../interfaces/genre";
 import { Release } from "../../interfaces/releases";
 

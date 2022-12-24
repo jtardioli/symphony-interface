@@ -24,7 +24,7 @@ const NavItemProtected: FC<Props> = ({ href, label }) => {
       }}
     >
       <p
-        className={`mb-[0.5rem] hover:cursor-pointer capitalize ${
+        className={`mb-[0.5rem] hover:cursor-pointer capitalize  hover:text-darkWhite ${
           !selected && "text-grayText"
         } `}
       >

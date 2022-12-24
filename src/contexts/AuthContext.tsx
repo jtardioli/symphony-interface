@@ -11,7 +11,7 @@ import { SiweMessage } from "siwe";
 import { useAccount, useEnsName, useNetwork, useSigner } from "wagmi";
 
 import { walletChangeDelay } from "../../app.config";
-import { isAuthUrl, nonceUrl, signInUrl } from "../api/server";
+import { isAuthUrl, nonceUrl, signInUrl } from "../api/api";
 import { useDebounce } from "../hooks/useDebounce";
 import { shrinkAddress } from "../utils/string";
 

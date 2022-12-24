@@ -2,10 +2,10 @@ import type { NextPage } from "next";
 import Head from "next/head";
 
 import { PrimaryButton, SecondaryButton } from "../../components/Buttons";
-import Layout from "../../components/Layouts/Layout";
-import AddContractData from "../../features/releases/components/AddContractData";
-import AddMetadata from "../../features/releases/components/AddMetadata";
-import AddTracks from "../../features/releases/components/AddTracks";
+import Layout from "../../components/Layouts";
+import AddContractData from "../../features/releases/components/Create/AddContractData";
+import AddMetadata from "../../features/releases/components/Create/AddMetadata";
+import AddTracks from "../../features/releases/components/Create/AddTracks";
 import useCreateRelease from "../../features/releases/hooks/useCreateRelease";
 
 const NewRelease: NextPage = () => {

@@ -1,8 +1,8 @@
 import React, { ChangeEvent, Dispatch, SetStateAction } from "react";
 
-import GenreInput from "../../../components/Inputs/GenreInput";
-import LabeledInput from "../../../components/Inputs/LabeledInput";
-import { Release, ReleaseType } from "../../../interfaces/releases";
+import GenreInput from "../../../../components/Inputs/GenreInput";
+import LabeledInput from "../../../../components/Inputs/LabeledInput";
+import { Release, ReleaseType } from "../../../../interfaces/releases";
 
 import ImageUpload from "./ImageUpload";
 

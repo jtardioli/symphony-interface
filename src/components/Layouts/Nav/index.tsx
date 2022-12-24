@@ -7,9 +7,10 @@ import NavItemProtected from "./NavItemProtected";
 
 const Nav = () => {
   const { address, user, signInWithEthereum, isVerified } = useAuth();
+
   const showConnectWallet = !address || (address && isVerified);
   const showSignIn = address && !isVerified;
-  console.log(showConnectWallet);
+
   return (
     <nav className="w-[15vw] bg-black h-screen fixed flex items-center flex-col z-10">
       <div className="mt-5">

@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 
-import { usersURl } from "../../api/server";
+import { usersURl } from "../../api/api";
 import { useAuth } from "../../contexts/AuthContext";
 import { PrimaryButton } from "../Buttons";
 import ConnectButton from "../Buttons/ConnectButton";
@@ -54,7 +54,13 @@ const SignInModal = () => {
   return (
     <Modal isOpen={isOpen} handleClose={handleClose}>
       <div className="flex flex-col items-center justify-center w-full gap-2">
-        {!address && <ConnectButton />}
+        {!address && (
+          <>
+            <p className="text-2xl leading-[20px] ">Connect an Ethereum</p>
+            <p className="mb-3 text-2xl "> wallet to use Symphony</p>
+            <ConnectButton />
+          </>
+        )}
         {showVerify && (
           <>
             <p className="text-2xl leading-[20px] ">Sign a message from your</p>

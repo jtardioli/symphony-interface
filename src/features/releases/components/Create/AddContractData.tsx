@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from "react";
 
-import { Release } from "../../../interfaces/releases";
+import { Release } from "../../../../interfaces/releases";
 
 interface Props {
   release: Release;

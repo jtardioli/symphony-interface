@@ -3,7 +3,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 
 import { PrimaryButton } from "../components/Buttons";
-import Layout from "../components/Layouts/Layout";
+import Layout from "../components/Layouts";
 import { useAuth } from "../contexts/AuthContext";
 
 const Home: NextPage = () => {
@@ -12,7 +12,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Symphony - Home</title>
+        <title>Home - Symphony </title>
         <meta
           name="Symphony"
           content="interface for musicians to mint and manage their albums"

@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { useRouter } from "next/router";
 
-import { createReleaseURl, uploadsURl } from "../../../api/server";
+import { createReleaseURl, uploadsURl } from "../../../api/api";
 import { useAuth } from "../../../contexts/AuthContext";
 import { Release, ReleaseType, Track } from "../../../interfaces/releases";
 import { findKeyByFieldName } from "../../../utils/file";

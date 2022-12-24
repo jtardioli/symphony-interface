@@ -42,9 +42,10 @@ function MyApp({ Component, pageProps }: AppProps) {
           accentColor: "#6843B8",
         })}
         chains={chains}
+        modalSize="compact"
       >
         <AuthProvider>
-          <Component {...pageProps} />]
+          <Component {...pageProps} />
           <ToastContainer theme="dark" autoClose={3200} />
         </AuthProvider>
       </RainbowKitProvider>
